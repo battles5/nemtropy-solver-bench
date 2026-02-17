@@ -1,112 +1,145 @@
-# ERGM / Maximum-Entropy: Solver Comparison with NEMtropy
+# ERGM / Maximum-Entropy: Solver Benchmark with NEMtropy
 
-Reproducible experiment for the **Complex Network Analysis** course — [2nd Level Master in Data Science and Statistical Learning (MD2SL)](https://md2sl-eng.imtlucca.it/), IMT School for Advanced Studies Lucca & University of Florence.
+Reproducible benchmark of numerical solvers for Exponential Random Graph Models (ERGM), developed for the **Complex Network Analysis** course — [2nd Level Master in Data Science and Statistical Learning (MD2SL)](https://md2sl-eng.imtlucca.it/), IMT School for Advanced Studies Lucca & University of Florence.
 
 ## Background
 
-Maximum-entropy models (Exponential Random Graph Models, ERGM) provide statistically principled *null models* for real networks by enforcing observed constraints (e.g. degree sequence). Estimating the Lagrange multipliers requires maximising the log-likelihood numerically.
+Maximum-entropy models (ERGM) provide statistically principled *null models* for real networks.
+Given a set of observed constraints (e.g. the degree sequence), the ERGM assigns probabilities to all possible graphs by maximising Shannon entropy subject to those constraints.
+The resulting distribution takes the exponential form
 
-Vallarano *et al.* (2021) compare three solver families implemented in the **NEMtropy** library:
+$$P^*(\mathbf{G}) = \frac{e^{-H(\mathbf{G},\,\boldsymbol{\theta})}}{Z(\boldsymbol{\theta})}, \qquad H(\mathbf{G},\,\boldsymbol{\theta}) = \sum_i \theta_i\,C_i(\mathbf{G}),$$
 
-| Method | Description |
-|---|---|
-| `newton` | Newton-Raphson with full Hessian |
-| `quasinewton` | Newton-Raphson with diagonal Hessian (approx.) |
-| `fixed-point` | Fixed-point iteration |
+where the Lagrange multipliers $\boldsymbol{\theta}$ are estimated by maximising the log-likelihood numerically.
+Different solvers offer different trade-offs between speed, memory usage and convergence guarantees.
+
+Vallarano *et al.* (2021) compare three solver families implemented in the open-source **NEMtropy** library:
+
+| Method | Algorithm | Memory | Convergence |
+|---|---|---|---|
+| `newton` | Newton–Raphson, full Hessian | $O(n^2)$ | Quadratic |
+| `quasinewton` | Newton–Raphson, diagonal Hessian | $O(n)$ | Super-linear |
+| `fixed-point` | Fixed-point iteration | $O(n)$ | Linear |
 
 Models tested:
-- **UBCM** – Undirected Binary Configuration Model (`cm_exp`)
-- **DBCM** – Directed Binary Configuration Model (`dcm_exp`)
+
+- **UBCM** – Undirected Binary Configuration Model (`cm_exp`): constraint = degree sequence $\{k_i\}$.
+- **DBCM** – Directed Binary Configuration Model (`dcm_exp`): constraints = out-degree $\{k_i^{\text{out}}\}$ + in-degree $\{k_i^{\text{in}}\}$.
 
 ## Methodology
 
-1. **Zachary's Karate Club** (n=34, m=78): UBCM solved with each method (3 runs, random seeds).
-2. **Synthetic G(n, p=0.05) networks**: Erdős–Rényi undirected (UBCM) and directed (DBCM) graphs with n ∈ {50, 100, 200}, 3 runs per method × size combination.
-3. For each run: **wall-clock runtime** and **maximum relative error** on the reconstructed degree constraints vs. the observed ones.
+1. **Zachary's Karate Club** (n = 34, m = 78): UBCM solved with each method, 5 independent runs.
+2. **Synthetic Erdős–Rényi G(n, p = 0.05)** undirected (UBCM) and directed (DBCM) graphs with n ∈ {50, 100, 200, 500, 1000, 2000}, 5 runs per (method × size) combination.
+3. For each run the script records:
+   - Wall-clock **runtime** (seconds, via `time.perf_counter`).
+   - **Maximum relative error** on the reconstructed degree constraints:
+     $$\varepsilon_{\max} = \max_{i:\,k_i > 0} \frac{|k_i - \langle k_i \rangle|}{k_i}$$
+   - **Mean relative error** (same formula, averaged over nodes).
+   - Convergence flag and number of solver steps (when exposed by NEMtropy).
 
-The relative error is defined as:
+## Results (seed = 42, 5 runs)
 
-$$\varepsilon = \max_{i:\, k_i > 0} \frac{|k_i - \hat{k}_i|}{k_i}$$
+### UBCM (undirected)
 
-where $k_i$ is the observed degree and $\hat{k}_i$ the expected degree under the fitted model.
+| Network | Method | n | Runtime (s) | Max rel. error |
+|---|---|---|---|---|
+| Karate Club | newton | 34 | 0.533 ± 1.17 | 7.4 × 10⁻⁹ |
+| Karate Club | quasinewton | 34 | 0.105 ± 0.15 | 3.4 × 10⁻⁸ |
+| Karate Club | fixed-point | 34 | 0.130 ± 0.29 | 3.6 × 10⁻⁹ |
+| G(n, p) | newton | 2 000 | 0.024 ± 0.002 | 1.3 × 10⁻⁸ |
+| G(n, p) | quasinewton | 2 000 | 0.115 ± 0.024 | 5.2 × 10⁻⁸ |
+| G(n, p) | fixed-point | 2 000 | 0.016 ± 0.001 | 1.1 × 10⁻⁹ |
 
-## Results
+### DBCM (directed)
 
-All three solvers converge with relative errors of order $10^{-8}$–$10^{-15}$ (DBCM) and $10^{-8}$–$10^{-10}$ (UBCM, newton/quasinewton). The `fixed-point` method on small sparse networks may exhibit less precise convergence for UBCM.
+| Network | Method | n | Runtime (s) | Max rel. error |
+|---|---|---|---|---|
+| G(n, p) | newton | 2 000 | 29.6 ± 10.2 | 4.0 × 10⁻⁸ |
+| G(n, p) | quasinewton | 2 000 | 1.51 ± 0.33 | 2.6 × 10⁻¹¹ |
+| G(n, p) | fixed-point | 2 000 | 0.869 ± 0.019 | 1.9 × 10⁻⁹ |
 
-| Network | Model | Method | n | Mean runtime (s) | Max rel. error |
-|---|---|---|---|---|---|
-| Karate Club | UBCM | newton | 34 | 0.752 | 6.3 × 10⁻⁹ |
-| Karate Club | UBCM | quasinewton | 34 | 0.088 | 2.6 × 10⁻⁸ |
-| Karate Club | UBCM | fixed-point | 34 | 0.154 | 3.3 × 10⁻⁹ |
-| G(n,p) undir. | UBCM | newton | 200 | 0.003 | 1.8 × 10⁻⁸ |
-| G(n,p) undir. | UBCM | quasinewton | 200 | 0.020 | 2.7 × 10⁻⁸ |
-| G(n,p) undir. | UBCM | fixed-point | 200 | 0.002 | 2.2 × 10⁻⁹ |
-| G(n,p) dir. | DBCM | newton | 200 | 0.024 | 5.7 × 10⁻⁷ |
-| G(n,p) dir. | DBCM | quasinewton | 200 | 0.013 | 9.6 × 10⁻¹² |
-| G(n,p) dir. | DBCM | fixed-point | 200 | 0.014 | 6.1 × 10⁻¹⁰ |
+### Key findings
 
-> Full table: `results/tables/benchmark.csv` (generated by the script).
+- All solvers achieve errors of order $10^{-8}$–$10^{-15}$, confirming the results of Vallarano et al. (2021).
+- **`newton`** scales poorly on DBCM because the full Hessian grows as $O(n^2)$: at n = 2 000 it is ~30× slower than `fixed-point`.
+- **`quasinewton`** provides the best accuracy on DBCM ($\sim 10^{-11}$) with moderate runtime.
+- **`fixed-point`** is the fastest and most stable solver across all sizes, with the lowest variance, though slightly less precise on UBCM than `newton`.
+
+> Full results: `results/tables/benchmark.csv` and `results/tables/summary.csv` (generated by the script).
+
+## Figures
+
+The script generates four plots:
+
+| Figure | Description |
+|---|---|
+| `runtime_vs_n.png` | Log-log runtime scaling (separate UBCM / DBCM panels with error bars) |
+| `error_vs_n.png` | Log-log mean relative error vs n (separate panels) |
+| `karate_runtime_methods.png` | Bar chart comparing solvers on Karate Club |
+| `error_heatmap.png` | Heatmap of max relative error by (n, method), separate panels |
 
 ## Quickstart
 
 ```bash
 # 1) Create virtualenv
 python3.11 -m venv .venv
-source .venv/bin/activate          # Linux/macOS
-# .\.venv\Scripts\Activate.ps1     # Windows PowerShell
+source .venv/bin/activate            # Linux / macOS
+# .\.venv\Scripts\Activate.ps1       # Windows PowerShell
 
 # 2) Install dependencies
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 
-# 3) Run experiment
-python src/experiment.py --outdir results --seed 42 --runs 3
+# 3) Run experiment (default: 5 runs, sizes up to 2000)
+python src/experiment.py --outdir results --seed 42
+
+# 4) Customise parameters
+python src/experiment.py --runs 10 --sizes "100,500,1000,5000" --p 0.1
 ```
 
-### Fallback (if `pip install NEMtropy` fails)
+### Conda alternative
 
 ```bash
-pip install "git+https://github.com/nicoloval/NEMtropy.git"
-# or: conda env create -f environment.yml && conda activate cna-nemtropy
+conda env create -f environment.yml
+conda activate cna-nemtropy
+python src/experiment.py
 ```
 
 ## Output
-
-The script produces:
 
 ```
 results/
 ├── figures/
 │   ├── runtime_vs_n.png
+│   ├── error_vs_n.png
 │   ├── karate_runtime_methods.png
 │   └── error_heatmap.png
 ├── tables/
-│   ├── benchmark.csv
-│   └── metadata.json
-└── samples/                       # (optional, with --sample_n > 0)
+│   ├── benchmark.csv       # Raw data (one row per run)
+│   ├── summary.csv         # Aggregated statistics
+│   └── metadata.json       # Python version, platform, parameters
+└── samples/                # Ensemble samples (with --sample_n > 0)
 ```
 
 ## Reproducibility
 
-- Global seed: `--seed 42` (default). NumPy's RNG derives internal seeds for each run.
-- `metadata.json` records Python version, platform and parameters.
-- To freeze dependency versions: `pip freeze > pip_freeze.txt`
+- **Global seed:** `--seed 42` (default). NumPy's `default_rng` derives per-run seeds deterministically.
+- **`metadata.json`** records Python version, platform, library versions and all CLI parameters.
+- **Freeze dependencies:** `pip freeze > pip_freeze.txt`
 
 ## Repository structure
 
 ```
 .
 ├── README.md
+├── LICENSE                        # MIT
 ├── requirements.txt
 ├── environment.yml
 ├── .gitignore
 ├── src/
-│   └── experiment.py              # End-to-end script
-├── data/
-│   ├── download_data.sh           # Downloads MovieLens 100K (optional)
-│   └── raw/                       # Raw data (not committed)
-└── results/
+│   └── experiment.py              # End-to-end benchmark script
+├── data/                          # Reserved for future datasets
+└── results/                       # Generated (gitignored)
     ├── figures/
     ├── tables/
     └── samples/
@@ -116,10 +149,9 @@ results/
 
 1. Vallarano, N., Bruno, M., Marchese, E., Trapani, G., Saracco, F., Cimini, G., Zanon, M. & Squartini, T. (2021). *Fast and scalable likelihood maximization for Exponential Random Graph Models with local constraints.* Scientific Reports **11**, 15227. [doi:10.1038/s41598-021-93830-4](https://doi.org/10.1038/s41598-021-93830-4) — [arXiv:2101.12625](https://arxiv.org/abs/2101.12625)
 2. Squartini, T. & Garlaschelli, D. (2011). *Analytical maximum-likelihood method to detect patterns in real networks.* New Journal of Physics **13**, 083001. [doi:10.1088/1367-2630/13/8/083001](https://doi.org/10.1088/1367-2630/13/8/083001)
-3. Saracco, F., Di Clemente, R., Gabrielli, A. & Squartini, T. (2015). *Randomizing bipartite networks: the case of the World Trade Web.* Scientific Reports **5**, 10595. [doi:10.1038/srep10595](https://doi.org/10.1038/srep10595)
-4. Zachary, W. W. (1977). *An information flow model for conflict and fission in small groups.* Journal of Anthropological Research **33**(4), 452–473.
-5. NEMtropy (Maximum Entropy Hub, IMT Lucca): [github.com/nicoloval/NEMtropy](https://github.com/nicoloval/NEMtropy) — [PyPI](https://pypi.org/project/NEMtropy/)
+3. Zachary, W. W. (1977). *An information flow model for conflict and fission in small groups.* Journal of Anthropological Research **33**(4), 452–473.
+4. NEMtropy (Maximum Entropy Hub, IMT Lucca): [github.com/nicoloval/NEMtropy](https://github.com/nicoloval/NEMtropy) — [PyPI](https://pypi.org/project/NEMtropy/)
 
 ## Licence
 
-Coursework project — no specific licence.
+[MIT](LICENSE)

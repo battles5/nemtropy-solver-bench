@@ -1,8 +1,15 @@
 name: cna-nemtropy
 channels:
   - conda-forge
+  - defaults
 dependencies:
   - python=3.11
+  - numpy<2
+  - scipy
+  - pandas
+  - matplotlib
+  - seaborn
+  - networkx
   - pip
   - pip:
-      - -r requirements.txt
+      - NEMtropy>=3.0.3

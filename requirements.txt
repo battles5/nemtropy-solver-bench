@@ -1,5 +1,5 @@
-# Core
-numpy<2        # NEMtropy 3.0.3 uses np.infty, removed in NumPy 2.0
+# Core scientific stack
+numpy<2            # NEMtropy 3.0.3 uses np.infty, removed in NumPy 2.0
 scipy
 pandas
 matplotlib
@@ -8,11 +8,5 @@ seaborn
 # Networks
 networkx
 
-# ERGM / maximum-entropy
+# ERGM / maximum-entropy solver library
 NEMtropy>=3.0.3
-
-# Stats (needed for BiCM + FDR alternative)
-statsmodels
-
-# (Optional) Saracco 2015 alternative
-bicm
