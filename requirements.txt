@@ -1,0 +1,18 @@
+# Core
+numpy<2        # NEMtropy 3.0.3 usa np.infty, rimosso in NumPy 2.0
+scipy
+pandas
+matplotlib
+seaborn
+
+# Networks
+networkx
+
+# ERGM / maximum-entropy
+NEMtropy>=3.0.3
+
+# Stats (serve per alternativa BiCM + FDR)
+statsmodels
+
+# (Opzionale) alternativa Saracco 2017
+bicm
