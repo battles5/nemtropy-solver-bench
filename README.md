@@ -1,6 +1,6 @@
 # ERGM / Maximum-Entropy: Solver Comparison with NEMtropy
 
-Reproducible experiment for the **Complex Network Analysis** course (MD2SL Master's programme, IMT School for Advanced Studies Lucca).
+Reproducible experiment for the **Complex Network Analysis** course — [2nd Level Master in Data Science and Statistical Learning (MD2SL)](https://md2sl-eng.imtlucca.it/), IMT School for Advanced Studies Lucca & University of Florence.
 
 ## Background
 
