@@ -10,7 +10,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Data & results (non committare raw e output pesanti)
+# Data & results (do not commit raw data and heavy outputs)
 data/raw/
 results/samples/
 results/figures/*.png
@@ -18,7 +18,7 @@ results/figures/*.pdf
 results/tables/*.csv
 results/tables/*.json
 
-# Materiale locale (non pushare)
+# Local material (do not push)
 slides/
 notebooks/
 materiale_corso/

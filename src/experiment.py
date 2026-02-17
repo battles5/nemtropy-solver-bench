@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 """
-Benchmark solutori ERGM / maximum-entropy (CNA, IMT Lucca).
+ERGM / Maximum-Entropy solver benchmark (Complex Network Analysis course).
 
-Paper target: Vallarano et al. 2021 – confronto tempo/accuratezza
-dei solutori newton, quasinewton e fixed-point su modelli UBCM e DBCM.
+Reference: Vallarano et al. 2021 – runtime/accuracy comparison of
+newton, quasinewton and fixed-point solvers on UBCM and DBCM models.
 Toolbox: NEMtropy (Maximum Entropy Hub, IMT Lucca).
 
-Reti: Karate Club (UBCM) + reti sintetiche G(n,p) (UBCM/DBCM).
+Networks: Karate Club (UBCM) + synthetic G(n,p) (UBCM/DBCM).
 
-Uso:
+Usage:
     python src/experiment.py --help
     python src/experiment.py --outdir results --seed 42 --runs 3
 """
@@ -31,10 +31,10 @@ import pandas as pd
 import networkx as nx
 import matplotlib
 
-matplotlib.use("Agg")  # backend non-interattivo (per script)
+matplotlib.use("Agg")  # non-interactive backend
 import matplotlib.pyplot as plt
 
-# Styling opzionale
+# Optional styling
 try:
     import seaborn as sns
 
@@ -51,7 +51,7 @@ from NEMtropy.models_functions import (
 )
 
 # ---------------------------------------------------------------------------
-# Costanti (da documentazione NEMtropy)
+# Constants (from NEMtropy docs)
 # ---------------------------------------------------------------------------
 METHODS: List[str] = ["newton", "quasinewton", "fixed-point"]
 UBCM_MODEL = "cm_exp"       # Undirected Binary Configuration Model (exp parametrization)
@@ -59,7 +59,7 @@ DBCM_MODEL = "dcm_exp"      # Directed Binary Configuration Model  (exp parametr
 
 
 # ---------------------------------------------------------------------------
-# Dataclass per risultati
+# Result dataclass
 # ---------------------------------------------------------------------------
 @dataclass
 class RunResult:
@@ -77,7 +77,7 @@ class RunResult:
 # Utilities
 # ---------------------------------------------------------------------------
 def ensure_dirs(outdir: Path) -> Dict[str, Path]:
-    """Crea sotto-cartelle per figure, tabelle e samples."""
+    """Create sub-directories for figures, tables and samples."""
     dirs = {
         "out": outdir,
         "fig": outdir / "figures",
@@ -90,7 +90,7 @@ def ensure_dirs(outdir: Path) -> Dict[str, Path]:
 
 
 def adjacency_from_graph(G: nx.Graph | nx.DiGraph) -> np.ndarray:
-    """Converte un grafo NetworkX in matrice binaria di adiacenza."""
+    """Convert a NetworkX graph to a binary adjacency matrix."""
     A = nx.to_numpy_array(G, dtype=float)
     A = (A > 0).astype(float)
     np.fill_diagonal(A, 0.0)
@@ -98,7 +98,7 @@ def adjacency_from_graph(G: nx.Graph | nx.DiGraph) -> np.ndarray:
 
 
 def rel_error(obs: np.ndarray, exp: np.ndarray) -> float:
-    """Errore relativo massimo, escludendo nodi con grado osservato 0."""
+    """Maximum relative error, excluding nodes with observed degree 0."""
     mask = obs > 0
     if not mask.any():
         return 0.0
@@ -106,8 +106,8 @@ def rel_error(obs: np.ndarray, exp: np.ndarray) -> float:
 
 
 def _get_solution(graph_obj) -> Optional[np.ndarray]:
-    """Recupera il vettore soluzione dall'oggetto NEMtropy dopo solve_tool."""
-    # Prova prima solution_array (ridotto) poi x/xy
+    """Retrieve the solution vector from a NEMtropy graph object after solve_tool."""
+    # Try solution_array (reduced) first, then x/xy
     for attr in ("solution_array", "x", "xy", "solution", "sol", "r_x", "theta"):
         val = getattr(graph_obj, attr, None)
         if val is not None:
@@ -116,7 +116,7 @@ def _get_solution(graph_obj) -> Optional[np.ndarray]:
 
 
 # ---------------------------------------------------------------------------
-# Solutori wrapper
+# Solver wrappers
 # ---------------------------------------------------------------------------
 def solve_ubcm(
     A: np.ndarray,
@@ -125,7 +125,7 @@ def solve_ubcm(
     sample_n: int = 0,
     sample_outdir: Optional[Path] = None,
 ) -> Tuple[float, Optional[float]]:
-    """Risolve UBCM (cm_exp) e restituisce (runtime_s, max_rel_err)."""
+    """Solve UBCM (cm_exp) and return (runtime_s, max_rel_err)."""
     g = UndirectedGraph(A)
     t0 = time.perf_counter()
     g.solve_tool(
@@ -146,7 +146,7 @@ def solve_ubcm(
             k_exp = expected_degree_cm(theta)
             maxerr = rel_error(k_obs, k_exp)
         except Exception:
-            # Fallback: usa expected_dseq calcolato internamente
+            # Fallback: use internally computed expected_dseq
             exp_dseq = getattr(g, "expected_dseq", None)
             if exp_dseq is not None:
                 maxerr = rel_error(k_obs, np.asarray(exp_dseq).ravel())
@@ -156,7 +156,7 @@ def solve_ubcm(
         try:
             g.ensemble_sampler(n=sample_n, cpu_n=1, output_dir=str(sample_outdir) + "/", seed=seed)
         except Exception as exc:
-            warnings.warn(f"ensemble_sampler fallito: {exc}")
+            warnings.warn(f"ensemble_sampler failed: {exc}")
 
     return (t1 - t0), maxerr
 
@@ -168,7 +168,7 @@ def solve_dbcm(
     sample_n: int = 0,
     sample_outdir: Optional[Path] = None,
 ) -> Tuple[float, Optional[float]]:
-    """Risolve DBCM (dcm_exp) e restituisce (runtime_s, max_rel_err)."""
+    """Solve DBCM (dcm_exp) and return (runtime_s, max_rel_err)."""
     g = DirectedGraph(A)
     t0 = time.perf_counter()
     g.solve_tool(
@@ -182,7 +182,7 @@ def solve_dbcm(
     t1 = time.perf_counter()
 
     maxerr: Optional[float] = None
-    # Usa expected_dseq calcolato internamente da NEMtropy
+    # Use internally computed expected_dseq from NEMtropy
     exp_dseq = getattr(g, "expected_dseq", None)
     if exp_dseq is not None:
         kout_obs = np.asarray(A.sum(axis=1)).ravel()
@@ -213,13 +213,13 @@ def solve_dbcm(
         try:
             g.ensemble_sampler(n=sample_n, cpu_n=1, output_dir=str(sample_outdir) + "/", seed=seed)
         except Exception as exc:
-            warnings.warn(f"ensemble_sampler fallito: {exc}")
+            warnings.warn(f"ensemble_sampler failed: {exc}")
 
     return (t1 - t0), maxerr
 
 
 # ---------------------------------------------------------------------------
-# Generatori reti sintetiche
+# Synthetic network generators
 # ---------------------------------------------------------------------------
 def gen_synthetic_undirected(n: int, p: float, seed: int) -> nx.Graph:
     return nx.gnp_random_graph(n=n, p=p, seed=seed, directed=False)
@@ -237,7 +237,7 @@ def plot_runtime_comparison(
     figpath: Path,
     title: str = "Runtime vs n (NEMtropy solve_tool)",
 ) -> None:
-    """Bar/line plot di runtime raggruppato per (model, method)."""
+    """Line plot of runtime grouped by (model, method)."""
     fig, ax = plt.subplots(figsize=(9, 5))
 
     agg = df.groupby(["model", "method", "n"])["runtime_s"].mean().reset_index()
@@ -245,33 +245,33 @@ def plot_runtime_comparison(
         sub = sub.sort_values("n")
         ax.plot(sub["n"], sub["runtime_s"], marker="o", linewidth=2, label=f"{model} | {method}")
 
-    ax.set_xlabel("n (numero nodi)")
-    ax.set_ylabel("runtime medio (s)")
+    ax.set_xlabel("n (number of nodes)")
+    ax.set_ylabel("mean runtime (s)")
     ax.set_title(title)
     ax.legend(fontsize=9)
     fig.tight_layout()
     fig.savefig(figpath, dpi=200, bbox_inches="tight")
     plt.close(fig)
-    print(f"  -> salvata {figpath}")
+    print(f"  -> saved {figpath}")
 
 
 def plot_karate_methods(df: pd.DataFrame, figpath: Path) -> None:
-    """Barplot runtime dei tre metodi su Karate Club."""
+    """Bar plot of runtime for the three methods on Karate Club."""
     fig, ax = plt.subplots(figsize=(7, 5))
 
     agg = df.groupby("method")["runtime_s"].agg(["mean", "std"]).reset_index()
     colors = ["#1f77b4", "#ff7f0e", "#2ca02c"]
     bars = ax.bar(agg["method"], agg["mean"], yerr=agg["std"], capsize=5, color=colors[: len(agg)])
-    ax.set_ylabel("runtime medio (s)")
-    ax.set_title("UBCM (cm_exp) su Karate Club – confronto metodi")
+    ax.set_ylabel("mean runtime (s)")
+    ax.set_title("UBCM (cm_exp) on Karate Club – method comparison")
     fig.tight_layout()
     fig.savefig(figpath, dpi=200, bbox_inches="tight")
     plt.close(fig)
-    print(f"  -> salvata {figpath}")
+    print(f"  -> saved {figpath}")
 
 
 def plot_error_heatmap(df: pd.DataFrame, figpath: Path) -> None:
-    """Heatmap max_rel_err per (n, method) – solo righe con errore non-null."""
+    """Heatmap of max_rel_err by (n, method) – only non-null rows."""
     sub = df.dropna(subset=["max_rel_err"])
     if sub.empty:
         return
@@ -286,11 +286,11 @@ def plot_error_heatmap(df: pd.DataFrame, figpath: Path) -> None:
         ax.set_xticklabels(pivot.columns)
         ax.set_yticks(range(len(pivot.index)))
         ax.set_yticklabels(pivot.index)
-    ax.set_title("Max errore relativo sui vincoli di grado")
+    ax.set_title("Max relative error on degree constraints")
     fig.tight_layout()
     fig.savefig(figpath, dpi=200, bbox_inches="tight")
     plt.close(fig)
-    print(f"  -> salvata {figpath}")
+    print(f"  -> saved {figpath}")
 
 
 # ---------------------------------------------------------------------------
@@ -298,14 +298,14 @@ def plot_error_heatmap(df: pd.DataFrame, figpath: Path) -> None:
 # ---------------------------------------------------------------------------
 def main() -> None:
     ap = argparse.ArgumentParser(
-        description="Benchmark NEMtropy: confronto solutori ERGM (Vallarano et al. 2021)"
+        description="NEMtropy benchmark: ERGM solver comparison (Vallarano et al. 2021)"
     )
-    ap.add_argument("--outdir", type=str, default="results", help="Directory output (default: results)")
-    ap.add_argument("--seed", type=int, default=42, help="Seed globale")
-    ap.add_argument("--runs", type=int, default=3, help="Ripetizioni per metodo")
-    ap.add_argument("--sample_n", type=int, default=0, help="Quanti grafi campionare dall'ensemble (0=skip)")
-    ap.add_argument("--sizes", type=str, default="50,100,200", help="Taglie reti sintetiche, es: 50,100,200")
-    ap.add_argument("--p", type=float, default=0.05, help="Probabilità archi per reti sintetiche G(n,p)")
+    ap.add_argument("--outdir", type=str, default="results", help="Output directory (default: results)")
+    ap.add_argument("--seed", type=int, default=42, help="Global seed")
+    ap.add_argument("--runs", type=int, default=3, help="Runs per method")
+    ap.add_argument("--sample_n", type=int, default=0, help="Number of ensemble graphs to sample (0=skip)")
+    ap.add_argument("--sizes", type=str, default="50,100,200", help="Synthetic network sizes, e.g. 50,100,200")
+    ap.add_argument("--p", type=float, default=0.05, help="Edge probability for synthetic G(n,p) networks")
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
@@ -343,7 +343,7 @@ def main() -> None:
     # 2) Reti sintetiche – UBCM
     # -----------------------------------------------------------------------
     print("\n" + "=" * 60)
-    print("2) Reti sintetiche undirected – UBCM (cm_exp)")
+    print("2) Synthetic undirected networks – UBCM (cm_exp)")
     print("=" * 60)
     for n in sizes:
         Gu = gen_synthetic_undirected(n=n, p=args.p, seed=int(rng.integers(0, 1_000_000)))
@@ -359,7 +359,7 @@ def main() -> None:
     # 3) Reti sintetiche – DBCM
     # -----------------------------------------------------------------------
     print("\n" + "=" * 60)
-    print("3) Reti sintetiche directed – DBCM (dcm_exp)")
+    print("3) Synthetic directed networks – DBCM (dcm_exp)")
     print("=" * 60)
     for n in sizes:
         Gd = gen_synthetic_directed(n=n, p=args.p, seed=int(rng.integers(0, 1_000_000)))
@@ -372,33 +372,33 @@ def main() -> None:
                 print(f"  n={n:4d}  {method:14s} run={r}  t={rt:.4f}s  max_err={err}")
 
     # -----------------------------------------------------------------------
-    # Salvataggio risultati
+    # Save results
     # -----------------------------------------------------------------------
     df = pd.DataFrame([asdict(r) for r in results])
     csv_path = dirs["tab"] / "benchmark.csv"
     df.to_csv(csv_path, index=False)
-    print(f"\n[OK] Tabella: {csv_path}")
+    print(f"\n[OK] Table: {csv_path}")
 
     # -----------------------------------------------------------------------
-    # Figure
+    # Figures
     # -----------------------------------------------------------------------
-    print("\nGenerazione figure...")
+    print("\nGenerating figures...")
 
     # Runtime vs n (solo reti sintetiche)
     df_synth = df[df["network"].str.contains("gnp")]
     if not df_synth.empty:
         plot_runtime_comparison(df_synth, dirs["fig"] / "runtime_vs_n.png")
 
-    # Karate Club – confronto metodi
+    # Karate Club – method comparison
     df_karate = df[df["network"] == "karate_club"]
     if not df_karate.empty:
         plot_karate_methods(df_karate, dirs["fig"] / "karate_runtime_methods.png")
 
-    # Heatmap errore (opzionale)
+    # Error heatmap (optional)
     plot_error_heatmap(df, dirs["fig"] / "error_heatmap.png")
 
     # -----------------------------------------------------------------------
-    # Metadata riproducibilità
+    # Reproducibility metadata
     # -----------------------------------------------------------------------
     meta = {
         "python_version": platform.python_version(),
@@ -414,18 +414,18 @@ def main() -> None:
         json.dump(meta, f, indent=2, ensure_ascii=False)
     print(f"[OK] Metadata: {meta_path}")
 
-    print("\n[DONE] Esperimento completato.")
+    print("\n[DONE] Experiment completed.")
 
     # -----------------------------------------------------------------------
-    # Switch path (commento): Saracco 2017 (BiCM + MovieLens)
+    # Switch path (comment): Saracco 2015 (BiCM + MovieLens)
     # -----------------------------------------------------------------------
-    # TODO: per pipeline alternativa:
+    # TODO: alternative pipeline:
     # 1) bash data/download_data.sh
     # 2) import bicm
-    # 3) carica data/raw/ml-100k/u.data  →  matrice bipartita utenti×film (binaria)
+    # 3) load data/raw/ml-100k/u.data  →  binary bipartite matrix users×movies
     # 4) bicm.BipartiteGraph(...)  →  fit BiCM, p-values
-    # 5) FDR con statsmodels.stats.multitest.multipletests
-    # 6) proiezione film-film e community detection
+    # 5) FDR via statsmodels.stats.multitest.multipletests
+    # 6) movie-movie projection and community detection
 
 
 if __name__ == "__main__":

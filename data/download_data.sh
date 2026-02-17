@@ -5,7 +5,7 @@ mkdir -p data/raw
 cd data/raw
 
 # MovieLens 100K (GroupLens official)
-# Fonte: https://grouplens.org/datasets/movielens/100k/
+# Source: https://grouplens.org/datasets/movielens/100k/
 URL="https://files.grouplens.org/datasets/movielens/ml-100k.zip"
 ZIP="ml-100k.zip"
 
