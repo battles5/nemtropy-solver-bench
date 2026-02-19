@@ -1,0 +1,5467 @@
+Source PDF: Binder1.pdf
+Total pages: 478
+
+===== Page 1 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Complex Network Analysis
+0. Kick-oﬀ meeting
+Tiziano Squartini
+21 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 2 =====
+Complex Network Analysis: abstract
+The course oﬀers a panoramic view of network science.
+Following its historical development, we will review the main concepts
+and methods of this discipline.
+Moving from the basic stylized facts characterizing real-world networks
+we will describe the most popular techniques to extract information from
+them.
+2
+
+===== Page 3 =====
+Complex Network Analysis: lecture contents
+• the birth of a theory (the K¨ onigsberg bridge problem and Euler’s
+solution);
+• complex networks: stylized facts (scale invariance of the degree,
+small-world phenomenon, modularity);
+• network representations (monopartite, bipartite and multilayer;
+binary and weighted; undirected and directed networks; hypergraphs;
+simplicial complexes);
+• network properties (degree, degree correlations, clustering
+coeﬃcient, paths, distances, centralities);
+• mesoscale structures (communities, core-periphery and bow-tie
+structures);
+3
+
+===== Page 4 =====
+Complex Network Analysis: lecture contents
+• a primer on static models (Erd¨ os-R´ enyi model, Chung-Lu model and
+ﬁtness model);
+• early attempts to infer a network structure from partial information
+(MaxEnt approach; the copula approach; MECAPM; Iterative
+Proportional Fitting algorithm; Minimum Density algorithm);
+• statistical mechanics of networks (constrained optimization of
+Shannon entropy; the Exponential Random Graphs formalism);
+• applications to real-world networks (economic and ﬁnancial networks
+reconstruction; early-warning signals detection; systemic risk
+estimation).
+4
+
+===== Page 5 =====
+Complex Network Analysis: resources
+• NETWORKS website: https://networks.imtlucca.it
+• Didactic material: http://networksciencebook.com
+• Papers repository: https://arxiv.org
+• Softwares repository: https://meh.imtlucca.it
+5
+
+===== Page 6 =====
+Complex Network Analysis: ﬁnal exam
+Each student will present and (publicly) discuss a brief literature review
+about a topic of his/her choosing.
+6
+
+===== Page 7 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Complex Network Analysis
+1. The birth of a theory
+Tiziano Squartini
+21 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 8 =====
+The birth of a theory
+K¨ onigsberg, 1736. Citizens were interested in a game. . .
+Does a walk exist that crosses all its bridges once and only once?
+2
+
+===== Page 9 =====
+The birth of a theory
+Euler embraced the challenge by inventing a new theory.
+In his own words, this was geometria situs problem.
+3
+
+===== Page 10 =====
+The birth of a theory
+Euler embraced the challenge by inventing a new theory.
+In his own words, this was geometria situs problem.
+4
+
+===== Page 11 =====
+The birth of a theory
+First, zones can be divided into even and odd ones.
+Even/odd zones are touched by an even/odd number of bridges.
+5
+
+===== Page 12 =====
+The birth of a theory
+Even zones are transfer zones. Odd zones are either starting or ending
+zones.
+Second, there is always an even number of odd zones. This is the
+handshaking lemma and requires some technical passages.
+6
+
+===== Page 13 =====
+The birth of a theory
+0 odd zones : any zone can be chosen as a starting point. The walk
+exists and ends there. More formally, one speaks of an Eulerian circuit .
+2 odd zones : any of the two zones can be chosen as a starting point.
+The walk exists and end in the other zone. More formally, one speaks of
+an Eulerian walk.
+4 (or more) odd zones : the walk does not exist.
+7
+
+===== Page 14 =====
+The birth of a theory
+8
+
+===== Page 15 =====
+The birth of a theory
+Euler draw the ﬁrst graph of the history.
+A new branch of the mathematics was born, i.e. graph theory.
+Graph theory is quite diﬀerent from network theory.
+Why? Graphs are basically simple while networks are complex. . .
+9
+
+===== Page 16 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Complex Network Analysis
+2. From graphs to networks: stylized facts
+Tiziano Squartini
+21 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 17 =====
+From graphs to networks
+After Euler, the biggest advance in graph theory was made by Erd¨ os.
+He combined graph theory with probability theory.
+2
+
+===== Page 18 =====
+From graphs to networks
+3
+
+===== Page 19 =====
+From graphs to networks
+4
+
+===== Page 20 =====
+Complex networks: stylized facts
+After Erd¨ os, the biggest advance in graph theory was made by Barabasi.
+He proved that Erd¨ os’ model was not adequate to describe real-world
+networks.
+5
+
+===== Page 21 =====
+Complex networks: stylized facts
+Networks were said to be complex because not of the Erd¨ os type.
+6
+
+===== Page 22 =====
+Complex networks: stylized facts
+Many real-world networks have a fat-tailed degree distribution.
+Power-laws became immediately popular.
+7
+
+===== Page 23 =====
+Complex networks: stylized facts
+Scale-free networks are ‘robust-yet-fragile’.
+In fact, are robust against random failures but fragile against attacks.
+8
+
+===== Page 24 =====
+Complex networks: stylized facts
+9
+
+===== Page 25 =====
+The rise of a science
+10
+
+===== Page 26 =====
+The rise of a science
+Since Barabasi’s article in 1999, network science has exploded.
+In 2021, Nobel Prize was given to Giorgio Parisi.
+11
+
+===== Page 27 =====
+The rise of a science
+12
+
+===== Page 28 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Complex Network Analysis
+3. Network representations
+Tiziano Squartini
+21 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 29 =====
+What are complex networks?
+2
+
+===== Page 30 =====
+What are complex networks?
+3
+
+===== Page 31 =====
+What are complex networks?
+4
+
+===== Page 32 =====
+What is a network?
+5
+
+===== Page 33 =====
+What is a network?
+6
+
+===== Page 34 =====
+What is a network?
+A network is a set of nodes connected by edges.
+In mathematical terms, a network is a couple of sets
+G(V, E )
+where V is the set ofnodes and E is the set oflinks.
+7
+
+===== Page 35 =====
+Mathematical intermezzo
+What is a BUN? The power set[V ] of a set
+V ={1,2,3}
+is the set of all its subsets:
+[V ] ={{},{1},{2},{3},{1,2},{1,3},{2,3},{1,2,3}};
+upon deﬁning
+[V ]2 ={{1,2},{1,3},{2,3}}
+we can say that
+E∈ [V ]2
+i.e. that a link is nothing else that an unordered pair of nodes.
+8
+
+===== Page 36 =====
+What is a network?
+• network or hypernetwork;
+• monoplex or multiplex;
+• monopartite or n-partite;
+• undirected or directed;
+• binary or weighted;
+• (if weighted) integer or real;
+• signed or unsigned.
+9
+
+===== Page 37 =====
+What is a network?
+Technically, we’ve deﬁned amonopartite, binary, undirected network.
+Monopartite, binary/weighted, undirected/directed networks are shown.
+10
+
+===== Page 38 =====
+Even more networks. . . !
+Bipartite networks (on the left) and multiplex networks (on the right).
+11
+
+===== Page 39 =====
+Algebraic representation of networks
+We need to turn to algebraic representations of networks.
+We need to deﬁneadjacency matrices.
+Any two nodes are adjacent if they are connected by a link.
+12
+
+===== Page 40 =====
+Algebraic representation of BUNs
+The adjacency matrix is maximally informative.
+A =
+
+
+0 1 1 1 0 0
+1 0 1 1 1 0
+1 1 0 1 1 1
+1 1 1 0 0 0
+0 1 1 0 0 0
+0 0 1 0 0 0
+
+
+A 1/0 indicates if any two nodes are adjacent/not adjacent, i.e.
+aij = 1
+if node i and node j are connected by a link, i.e.
+aij = 1⇐⇒ (i, j)∈ E. 13
+
+===== Page 41 =====
+Algebraic representation of WUNs
+The adjacency matrix is maximally informative.
+W =
+
+
+0 2 2 1 0 0
+2 0 1 2 4 0
+2 1 0 1 6 1
+1 2 1 0 0 0
+0 4 6 0 0 0
+0 0 1 0 0 0
+
+
+The generic element
+wij∈ N, wij∈ R
+indicates how much nodei and node j exchange.
+14
+
+===== Page 42 =====
+Mathematical intermezzo
+What is a WUN? The edge-set of
+V ={1,2,3}
+is a multiset (that is a set with repeated elements) whose elements are
+elements of [V ]2, e.g.
+E ={{1,2},{1,2},{1,2},{1,3},{1,3},{2,3}}.
+The multiplicity of each member in the multiset is rendered (pictorially)
+by drawing an equal number of lines between the corresponding nodes.
+15
+
+===== Page 43 =====
+Algebraic representation of BDNs
+The adjacency matrix is maximally informative.
+A =
+
+
+0 1 1 1 0 0
+1 0 1 1 0 0
+1 0 0 0 1 1
+1 0 1 0 0 0
+0 1 1 0 0 0
+0 0 1 0 0 0
+
+
+A 1/0 indicates if any two nodes are adjacent/not adjacent, i.e.
+aij = 1
+if node i points towards nodej.
+16
+
+===== Page 44 =====
+Mathematical intermezzo
+What is a BDN? The Cartesian productV× V of a set
+V ={1,2,3}
+is the set of all ordered pairs(vi, vj ) where vi and vj are in V, i.e.
+V× V ={{1,2},{2,1},{1,3},{3,1},{2,3},{3,2}};
+we can say that
+E∈ V× V
+i.e. that a link is nothing else that an ordered pair of nodes.
+17
+
+===== Page 45 =====
+Algebraic representation of WDNs
+The adjacency matrix is maximally informative.
+W =
+
+
+0 1 5 6 0 0
+2 0 6 3 0 0
+2 0 0 0 2 3
+1 0 1 0 0 0
+0 4 6 0 0 0
+0 0 1 0 0 0
+
+
+The generic element
+wij∈ N, wij∈ R
+indicates how much nodei ‘exports’ towards nodej.
+18
+
+===== Page 46 =====
+Mathematical intermezzo
+What is a WDN? The edge-set of
+V ={1,2,3}
+is a multiset (that is a set with repeated elements) whose elements are
+elements of V× V, e.g.
+E ={{1,2},{1,2},{1,2},{2,1},{2,1},{1,3},{3,1},{3,1}}.
+The multiplicity of each member in the multiset is rendered (pictorially)
+by drawing an equal number of lines between the corresponding nodes.
+19
+
+===== Page 47 =====
+Algebraic representation of BBUNs
+An algebraic representation of a network is nothing more than a table.
+What about bipartite, binary, undirected networks?
+20
+
+===== Page 48 =====
+Algebraic representation of BBUNs
+The adjacency matrix is maximally informative.
+M =
+
+
+0 1 1 1 0 0 0 1 1 1 0 0
+1 0 1 1 1 0 1 0 1 1 1 0
+1 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 0 1 0 1 1 0 1 0 1
+0 1 1 0 0 0 0 1 1 0 1 0
+0 0 1 0 0 1 0 0 1 0 0 1
+
+
+A 1/0 indicates if any two nodes are adjacent/not adjacent, i.e.
+miα = 1
+if node i (on one layer) and nodeα (on the other layer) are connected by
+a link.
+21
+
+===== Page 49 =====
+Mathematical intermezzo
+What is a BBUN? It is a graph whose vertices can be divided into two
+disjoint sets U and V in such a way that every edge connects a vertex in
+U to one inV.
+The two setsU and V may be thought of as being colored with two
+diﬀerent colors: if one colors all nodes inU in blue and all nodes inV in
+green, each edge has endpoints of diﬀerent colors.
+A bipartite graph is indicated as
+G = (U, V, E )
+with U and V denoting the graph sets andE denoting its edges.
+22
+
+===== Page 50 =====
+Network representations: a summary
+23
+
+===== Page 51 =====
+Network representations: a summary
+24
+
+===== Page 52 =====
+Beyond graphs: hypergraphs
+25
+
+===== Page 53 =====
+Questions
+Free network data are available at the URLs
+• https://networkrepository.com/index.php;
+• https://snap.stanford.edu/data/.
+Take a look at them and answer the following questions.
+26
+
+===== Page 54 =====
+Questions
+• how are data organized?
+• extract the adjacency matrix out of a bunch of binary networks at
+your choice;
+• what would be a suitable, algebraic representation for bipartite,
+directed networks?
+• what would be a suitable, algebraic representation for multiplex
+networks?
+• what would be a suitable, algebraic representation for hypergraphs?
+27
+
+===== Page 55 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Complex Network Analysis
+4A. Network properties - BUNs and BDNs
+Tiziano Squartini
+21 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 56 =====
+Algebraic representation of networks
+We need to turn to algebraic representations of networks.
+We need to deﬁneadjacency matrices.
+Any two nodes are adjacent if they are connected by a link.
+2
+
+===== Page 57 =====
+BINARY UNDIRECTED NETWORKS
+3
+
+===== Page 58 =====
+Algebraic representation of BUNs
+Given the adjacency matrix (notice: it is symmetric!)
+A =
+
+)))))))
+0 1 1 1 0 0
+1 0 1 1 1 0
+1 1 0 1 1 1
+1 1 1 0 0 0
+0 1 1 0 0 0
+0 0 1 0 0 0
+
+(
+one can deﬁne thetotal number of links as
+L =
+N∑
+i=1
+N∑
+j=i+1
+aij≡
+∑
+i<j
+aij.
+4
+
+===== Page 59 =====
+Algebraic representation of BUNs
+Given the adjacency matrix (notice: it is symmetric!)
+A =
+
+)))))))
+0 1 1 1 0 0
+1 0 1 1 1 0
+1 1 0 1 1 1
+1 1 1 0 0 0
+0 1 1 0 0 0
+0 0 1 0 0 0
+
+(
+one can deﬁne thelink density as
+c = L
+N(N−1)/2 = 2L
+N(N−1).
+5
+
+===== Page 60 =====
+Algebraic representation of BUNs
+Given the adjacency matrix (notice: it is symmetric!)
+A =
+
+)))))))
+0 1 1 1 0 0
+1 0 1 1 1 0
+1 1 0 1 1 1
+1 1 1 0 0 0
+0 1 1 0 0 0
+0 0 1 0 0 0
+
+(
+one can deﬁne thedegree of each node, as
+ki =
+N∑
+j=1
+(j̸=i)
+≡
+∑
+j
+aij,∀ i
+i.e. as the number of neighbors of each node.
+6
+
+===== Page 61 =====
+Algebraic representation of BUNs
+Given the relations above, one ﬁnds that
+∑
+i
+ki =
+∑
+i
+∑
+j
+aij = 2L
+(which is the handshaking lemma),
+k =
+∑
+i ki
+N = 2L
+N
+(which is nothing else that the average degree) and
+c = 2L
+N(N−1) = k
+N−1.
+7
+
+===== Page 62 =====
+Algebraic representation of BUNs
+8
+
+===== Page 63 =====
+Some BUNs
+9
+
+===== Page 64 =====
+Degree distribution - in theory
+10
+
+===== Page 65 =====
+Degree distribution - in theory
+Why are real-world networks said to bescale-free?
+Let us imaginep(k) is power-law, i.e.p(k)∝ k−γ.
+If γ >1, the normalization condition leads to ﬁnd
+∫ +∞
+kmin
+Ck−γ = 1 =⇒ C
+( k−γ+1
+−γ +1
+)+∞
+kmin
+= 1 =⇒ C
+(
+k−γ+1
+min
+γ−1
+)
+= 1;
+hence,
+P(k) =
+(
+γ−1
+k−γ+1
+min
+)
+k−γ.
+11
+
+===== Page 66 =====
+Degree distribution - in theory
+As a consequence,
+⟨k n⟩ =
+∫ +∞
+kmin
+(
+γ−1
+k−γ+1
+min
+)
+k−γ+n =
+(
+γ−1
+k−γ+1
+min
+) (
+k−γ+n+1
+min
+γ− n−1
+)
+=
+( γ−1
+γ− n−1
+)
+k n
+min
+which is deﬁned ifγ >1 and n<γ −1.
+Real-world networks have 2<γ <3: hence,⟨k 2⟩ diverges and the degree
+variance does not exist.
+As the standard deviation provides the scale of variation of observations,
+in the cases above, a scale does not exist.
+12
+
+===== Page 67 =====
+Regimes
+13
+
+===== Page 68 =====
+Degree distribution - in practice
+14
+
+===== Page 69 =====
+Some BUNs
+15
+
+===== Page 70 =====
+Degree correlations
+Degree correlations characterize the network(dis)assortativity.
+It can be quantiﬁed via the average nearest neighbors degree (ANND)
+k nn
+i =
+∑
+j aij kj
+ki
+,∀ i
+that calculates the arithmetic mean of the degrees of the neighbors of a
+node.
+To measure correlations, scatter the ANND of nodes versus their degree.
+16
+
+===== Page 71 =====
+Degree correlations
+Scatter the average nearest neighbors degree (ANND) versus the degree.
+Rising trend: the network isassortative (degrees are positively correlated).
+Decreasing trend: the network isdisassortative (degrees are negatively
+correlated).
+17
+
+===== Page 72 =====
+Degree correlations
+18
+
+===== Page 73 =====
+Clustering coeﬃcient
+The clustering coeﬃcient
+ci =
+∑
+j
+∑
+k aij ajk aki
+ki (ki−1) ,∀ i
+characterizes a networkhierarchy and measures the fraction of completed
+triangles that have one vertex ini.
+How many completed triangles can exist? They areki (ki−1)/2.
+How many completed triangles do exist? They are∑
+j
+∑
+k=j+1 aij ajk aki.
+19
+
+===== Page 74 =====
+Clustering coeﬃcient
+How many completed triangles can exist? They areki (ki−1)/2.
+How many completed triangles do exist? They are∑
+j
+∑
+k=j+1 aij ajk aki.
+20
+
+===== Page 75 =====
+Clustering coeﬃcient
+21
+
+===== Page 76 =====
+Clustering coeﬃcient
+Whenever the clustering coeﬃcient decreases with the degree the
+network is said to behierarchical.
+22
+
+===== Page 77 =====
+A perfectly hierarchical network
+23
+
+===== Page 78 =====
+A quick look at the WTW
+Let us plot thek nn
+i and the ci versus ki for the WTW.
+The WTW is disassortative and hierarchical.
+24
+
+===== Page 79 =====
+A quick look at e-MID
+25
+
+===== Page 80 =====
+Motifs
+The clustering coeﬃcient accounts for triangular paths but other kinds of
+subgraphs can be deﬁned, i.e. themotifs.
+Motifs (also known as graphlets) are substructures supposedly of some
+importance.
+26
+
+===== Page 81 =====
+Motifs
+Motifs (also known as graphlets) are substructures supposedly of some
+importance.
+Naturally, the number of nodes deﬁning motifs can be risen.
+27
+
+===== Page 82 =====
+BINARY DIRECTED NETWORKS
+28
+
+===== Page 83 =====
+...what about BDNs?
+BDNs are directed networks, i.e. their links have a direction!
+How do we extend the deﬁnition of undirected quantities?
+29
+
+===== Page 84 =====
+...what about BDNs?
+Given the adjacency matrix (notice: it is generally asymmetric!)
+A =
+
+)))))))
+0 1 1 1 0 0
+1 0 1 1 0 0
+1 0 0 0 1 1
+1 0 1 0 0 0
+0 1 1 0 0 0
+0 0 1 0 0 0
+
+(
+one can deﬁne
+L =
+N∑
+i=1
+N∑
+j=1
+(j̸=i)
+aij≡
+∑
+i̸=j
+aij and c = L
+N(N−1).
+30
+
+===== Page 85 =====
+...what about BDNs?
+For BDNs one can deﬁne theout-degree as
+k out
+i =
+∑
+j
+aij,∀ i
+i.e. the number of neighbors each node points to and thein-degree as
+k in
+i =
+∑
+j
+aji,∀ i
+i.e. the number of neighbors each node is pointed by. Hence,
+∑
+i
+k out
+i =
+∑
+i
+k in
+i =
+∑
+i
+∑
+j
+aij = L
+(which is the equivalent of the handshaking lemma).
+31
+
+===== Page 86 =====
+...what about BDNs?
+Given the relations above, one ﬁnds that
+k =
+∑
+i ki
+N = L
+N
+(which is nothing else that the average degree) and
+c = L
+N(N−1) = k
+N−1.
+Moreover, one deﬁnes the total degree as
+k tot
+i = k out
+i + k in
+i ,∀ i.
+32
+
+===== Page 87 =====
+...what about BDNs?
+33
+
+===== Page 88 =====
+...what about BDNs?
+Pay attention to what you look for: not all distributions are power-laws!
+34
+
+===== Page 89 =====
+...what about BDNs?
+Degree correlations characterize the network(dis)assortativity.
+It can be quantiﬁed via four diﬀerent measures
+k out/out
+i =
+∑
+j aij k out
+j
+k out
+i
+and k in/in
+i =
+∑
+j aji k in
+j
+k in
+i
+k out/in
+i =
+∑
+j aij k in
+j
+k out
+i
+and k in/out
+i =
+∑
+j aji k out
+j
+k in
+i
+that capture the correlations between out- and in-degrees.
+Moreover, one can deﬁne
+k tot/tot
+i =
+∑
+j (aij + aji )k tot
+j
+k tot
+i
+.
+35
+
+===== Page 90 =====
+A quick look at the WTW
+36
+
+===== Page 91 =====
+...what about BDNs?
+37
+
+===== Page 92 =====
+A quick look at the WTW
+38
+
+===== Page 93 =====
+...what about BDNs?
+39
+
+===== Page 94 =====
+...what about BDNs?
+40
+
+===== Page 95 =====
+...what about BDNs?
+Motif m N m: 1st deﬁnition
+1 ∑
+i̸=j̸=k (1− aij )aji ajk (1− akj )(1− aik )(1− aki )
+2 ∑
+i̸=j̸=k aij (1− aji )ajk (1− akj )(1− aik )(1− aki )
+3 ∑
+i̸=j̸=k aij aji ajk (1− akj )(1− aik )(1− aki )
+4 ∑
+i̸=j̸=k (1− aij )(1− aji )ajk (1− akj )aik (1− aki )
+5 ∑
+i̸=j̸=k (1− aij )aji ajk (1− akj )aik (1− aki )
+6 ∑
+i̸=j̸=k aij aji ajk (1− akj )aik (1− aki )
+7 ∑
+i̸=j̸=k aij aji (1− ajk )akj (1− aik )(1− aki )
+8 ∑
+i̸=j̸=k aij aji ajk akj (1− aik )(1− aki )
+9 ∑
+i̸=j̸=k (1− aij )aji (1− ajk )akj aik (1− aki )
+10 ∑
+i̸=j̸=k (1− aij )aji ajk akj aik (1− aki )
+11 ∑
+i̸=j̸=k aij (1− aji )ajk akj aik (1− aki )
+12 ∑
+i̸=j̸=k aij aji ajk akj aik (1− aki )
+13 ∑
+i̸=j̸=k aij aji ajk akj aik aki
+41
+
+===== Page 96 =====
+...what about BDNs?
+Motifs can be useful to classify networks since these structures are
+supposed to have a function as well.
+42
+
+===== Page 97 =====
+...what about BDNs?
+Motifs can be useful to classify networks since these structures are
+supposed to have a function as well.
+43
+
+===== Page 98 =====
+...what about BDNs?
+r =
+∑
+i̸=j aij aji
+∑
+i̸=j aij
+=
+∑
+i̸=j a↔
+ij∑
+i̸=j aij
+= L↔
+L ∈ [0,1]
+44
+
+===== Page 99 =====
+...what about BDNs?
+45
+
+===== Page 100 =====
+...what about BDNs?
+A diﬀerent deﬁnition is encountered, i.e.
+ρ = r−⟨ r⟩
+1−⟨ r⟩
+which normalizes reciprocity and provides the ﬁrst deﬁnition ofnull
+model.
+46
+
+===== Page 101 =====
+...what about BDNs?
+47
+
+===== Page 102 =====
+Questions
+Free network data are available at the URLs
+• https://networkrepository.com/index.php;
+• https://snap.stanford.edu/data/.
+Consider a bunch of binary networks at your choice and answer the
+following questions.
+48
+
+===== Page 103 =====
+Questions
+• calculate the degree distribution(s);
+• scatter the (un)directed ANND(s) versus the degree(s): is the
+network assortative or disassortative?
+• scatter the (un)directed clustering coeﬃcient(s) versus the
+degree(s): is the network hierarchical?
+• what is the percentage of reciprocal links?
+49
+
+===== Page 104 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Complex Network Analysis
+4B. Network properties - WUNs and WDNs
+Tiziano Squartini
+21 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 105 =====
+Algebraic representation of networks
+We need to turn to algebraic representations of networks.
+We need to deﬁneadjacency matrices.
+Any two nodes are adjacent if they are connected by a link.
+2
+
+===== Page 106 =====
+WEIGHTED UNDIRECTED NETWORKS
+3
+
+===== Page 107 =====
+WUNs: an example
+4
+
+===== Page 108 =====
+Algebraic representation of WUNs
+Given the adjacency matrix (notice: it is symmetric!)
+W =
+
+
+0 2 2 1 0 0
+2 0 1 2 4 0
+2 1 0 1 6 1
+1 2 1 0 0 0
+0 4 6 0 0 0
+0 0 1 0 0 0
+(
+
+one can deﬁne thetotal weight as
+W =
+N∑
+i=1
+N∑
+j=i+1
+wij≡
+∑
+i<j
+wij .
+5
+
+===== Page 109 =====
+Algebraic representation of WUNs
+Given the adjacency matrix (notice: it is symmetric!)
+W =
+
+
+0 2 2 1 0 0
+2 0 1 2 4 0
+2 1 0 1 6 1
+1 2 1 0 0 0
+0 4 6 0 0 0
+0 0 1 0 0 0
+(
+
+one can deﬁne theaverage weight as
+W = W
+N(N−1)/2 = 2W
+N(N−1) .
+6
+
+===== Page 110 =====
+Algebraic representation of WUNs
+Given the adjacency matrix (notice: it is symmetric!)
+W =
+
+
+0 2 2 1 0 0
+2 0 1 2 4 0
+2 1 0 1 6 1
+1 2 1 0 0 0
+0 4 6 0 0 0
+0 0 1 0 0 0
+(
+
+one can deﬁne thestrength of each node, as
+si =
+∑
+j
+wij ,∀ i
+i.e. the weighted number of neighbors of each node.
+7
+
+===== Page 111 =====
+Strength distribution
+8
+
+===== Page 112 =====
+WUNs: an example
+9
+
+===== Page 113 =====
+Degree, weight and strength distribution
+Be careful what you look for: not all distributions are power laws!
+Many distributions are indeed fat-tailed but not necessarily power-laws!
+10
+
+===== Page 114 =====
+Degree, weight and strength distribution
+What not to do: ﬁtting part of a distribution may lead to wrong
+conclusions.
+11
+
+===== Page 115 =====
+Correlations between strengths and degrees
+12
+
+===== Page 116 =====
+Correlations between weights and degrees
+The hubs may also exchange a lot.
+A similar relationship is expected when scatteringwij VS si sj.
+13
+
+===== Page 117 =====
+Strength correlations
+Strength correlations characterize the networkweighted (dis)assortativity.
+It can be quantiﬁed via the average nearest neighbors strength (ANNS)
+s nn
+i =
+∑
+j aij sj
+ki
+,∀ i
+that calculates the arithmetic mean of the strengths of the neighbors of a
+node.
+To measure correlations, scatter the ANNS of nodes versus their strength.
+14
+
+===== Page 118 =====
+Strength correlations
+By scattering the ANNS versus the strength...
+...one discovers that strengths are negatively correlated as well.
+15
+
+===== Page 119 =====
+Strength and degree correlations
+One can deﬁne a weighted average nearest neighbors strength (WANNS)
+s w ,nn
+i =
+∑
+j wij sj
+si
+,∀ i
+i.e. the weighted average of the strengths of the neighbors of a node.
+One can deﬁne the weighted average nearest neighbors degree (WANND)
+k w ,nn
+i =
+∑
+j wij kj
+si
+,∀ i
+i.e. the weighted average of the degrees of the neighbors of a node.
+16
+
+===== Page 120 =====
+Strength and degree correlations
+k w ,nn
+i =
+∑
+j wij kj
+si
+,∀ i
+17
+
+===== Page 121 =====
+Weighted clustering coeﬃcient(s)
+c w
+i = 1
+si (ki−1)
+∑
+j
+∑
+k
+(wij + wki
+2
+)
+aij ajk aki ,∀ i
+18
+
+===== Page 122 =====
+Weighted clustering coeﬃcient(s)
+19
+
+===== Page 123 =====
+Weighted clustering coeﬃcient(s)
+20
+
+===== Page 124 =====
+Weighted clustering coeﬃcient(s)
+The clustering coeﬃcient
+c w
+i =
+∑
+j
+∑
+k (wij wjk wki )1/3
+ki (ki−1) ,∀ i
+weighs the triangles counted byci. However, it is not in[0,1].
+The deﬁnition
+c w
+i = 1
+si (ki−1)
+∑
+j
+∑
+k
+(wij + wki
+2
+)
+aij ajk aki ,∀ i
+instead, is properly normalized.
+21
+
+===== Page 125 =====
+Weighted clustering coeﬃcient(s)
+22
+
+===== Page 126 =====
+Weighted clustering coeﬃcient(s)
+23
+
+===== Page 127 =====
+Weighted clustering coeﬃcient(s)
+24
+
+===== Page 128 =====
+Weighted clustering coeﬃcient(s)
+25
+
+===== Page 129 =====
+Weighted clustering coeﬃcient(s)
+26
+
+===== Page 130 =====
+Disparity
+The disparity index is deﬁned as
+Yi =
+∑
+j
+[ wij
+si
+]2
+=
+∑
+j w 2
+ij
+s 2
+i
+=
+∑
+j w 2
+ij
+[∑
+j wij
+]2 ,∀ i;
+it quantiﬁes the (un)evenness of the distribution of weights of nodei
+over the ki links characterising its connectivity.
+The i-th disparity reads
+Yi = 1
+ki
+in case weights are equally distributed among the connections established
+by i, i.e. wij = aij si
+ki
+,∀ j.
+27
+
+===== Page 131 =====
+Disparity
+If Yi = 1/ki all weights are treated equally.
+Otherwise, few weights dominate.
+28
+
+===== Page 132 =====
+Weighted motifs
+Motifs have been deﬁned for binary networks.
+When coming to weighted networks, we simply need to account for the
+weight of links.
+29
+
+===== Page 133 =====
+WEIGHTED DIRECTED NETWORKS
+30
+
+===== Page 134 =====
+...what about WDNs?
+Given the adjacency matrix (notice: it is generally asymmetric!)
+W =
+
+
+0 1 5 6 0 0
+2 0 6 3 0 0
+2 0 0 0 2 3
+1 0 1 0 0 0
+0 4 6 0 0 0
+0 0 1 0 0 0
+(
+
+one can deﬁne
+W =
+N∑
+i=1
+N∑
+j=1
+wij≡
+∑
+i̸=j
+wij and W = W
+N(N−1) .
+31
+
+===== Page 135 =====
+...what about WDNs?
+For WDNs one can deﬁne theout-strength as
+s out
+i =
+∑
+j
+wij ,∀ i
+i.e. the out-going ﬂux from each node and thein-strength as
+s in
+i =
+∑
+j
+wji ,∀ i
+i.e. the incoming ﬂux into each node. Hence,
+∑
+i
+s out
+i =
+∑
+i
+s in
+i =
+∑
+i
+∑
+j
+wij = W .
+32
+
+===== Page 136 =====
+...what about WDNs?
+Pay attention to what you look for: not all distributions are power-laws!
+33
+
+===== Page 137 =====
+...what about WDNs?
+Strength correlations characterize the networkweighted (dis)assortativity.
+It can be quantiﬁed via four diﬀerent measures
+s out/out
+i =
+∑
+j aij s out
+j
+k out
+i
+and s in/in
+i =
+∑
+j aji s in
+j
+k in
+i
+s out/in
+i =
+∑
+j aij s in
+j
+k out
+i
+and s in/out
+i =
+∑
+j aji s out
+j
+k in
+i
+that capture the correlations between out- and in-degrees.
+Moreover, one can deﬁne
+s tot/tot
+i =
+∑
+j (aij + aji )s tot
+j
+k tot
+i
+.
+34
+
+===== Page 138 =====
+A quick look at the WTW
+35
+
+===== Page 139 =====
+...what about WDNs?
+One can deﬁne the directed versions of the weighted average nearest
+neighbors strength (WANNS)
+WANNSout,out
+i =
+∑
+j wij s out
+j
+s out
+i
+,∀ i.
+i.e. the weighted average of the out-strengths of the neighbors of a node.
+One can deﬁne the directed versions of the weighted average nearest
+neighbors degree (WANND)
+WANNDout,out
+i =
+∑
+j wij k out
+j
+s out
+i
+,∀ i
+i.e. the weighted average of the out-degrees of the neighbors of a node.
+36
+
+===== Page 140 =====
+...what about WDNs?
+37
+
+===== Page 141 =====
+A quick look at the WTW
+38
+
+===== Page 142 =====
+...what about WDNs?
+r w =
+∑
+i̸=j min[wij , wji ]∑
+i̸=j wij
+=
+∑
+i̸=j w ↔
+ij∑
+i̸=j wij
+= W ↔
+W ∈ [0,1]
+39
+
+===== Page 143 =====
+Questions
+Free network data are available at the URLs
+• https://networkrepository.com/index.php;
+• https://snap.stanford.edu/data/.
+Consider a bunch of weighted networks at your choice and answer the
+following questions.
+40
+
+===== Page 144 =====
+Questions
+• calculate the strength distribution(s);
+• scatter the (un)directed ANNS(s) versus the degree(s): is the
+network assortative or disassortative?
+• scatter the weights VS the product of strengths, i.e.wij VS si sj (or
+wij VS s out
+i s in
+j in case of WDNs);
+• what is the percentage of reciprocal links?
+41
+
+===== Page 145 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+5A. Paths, walks, distances, centralities
+Tiziano Squartini
+26 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 146 =====
+Paths, walks, distances
+A walk is a ﬁnite or inﬁnite sequence of edges which joins a sequence of
+vertices.
+Let G = (V, E ) be a graph. A ﬁnite walk is a sequence of edges
+(e1, e2... en−1) for which there is a sequence of vertices(v1, v2... vn)
+such that ei ={vi, vi+1} for i = 1,2... n−1; (v1, v2... vn) is the vertex
+sequence of the walk.
+This walk is closed ifv1 = vn, otherwise it is open.
+If w = (e1, e2... en−1) is a ﬁnite walk with vertex sequence(v1, v2... vn)
+then w is said to be a walk fromv1 to vn.
+2
+
+===== Page 147 =====
+Paths, walks, distances
+A trail is a walk in which all edges are distinct. A closed trail is acircuit.
+A path is a trail in which all vertices (and therefore also all edges) are
+distinct.
+If there is a ﬁnite walk between two distinct vertices then there is also a
+ﬁnite trail and a ﬁnite path between them.
+A weighted graph associates a value (weight) with every edge in the
+graph. The weight of a walk (or trail or path) in a weighted graph is the
+sum of the weights of the traversed edges. Sometimes the wordscost or
+length are used instead of weight.
+3
+
+===== Page 148 =====
+Paths, walks, distances
+4
+
+===== Page 149 =====
+Back to Königsberg
+Eulerian trail: it traverses each link exactly once (can visit nodes more
+than once).
+For the existence of Eulerian trails it is necessary that zero or two vertices
+have an odd degree.
+5
+
+===== Page 150 =====
+Back to Königsberg
+Eulerian circuit: Eulerian trail that starts and ends on the same vertex.
+Euler’s theorem: a connected graph has an Eulerian circuit if and only if
+each degree is even.
+6
+
+===== Page 151 =====
+Paths, walks and distances
+The length of a path is the number of its links, counting multiple links
+multiple times.
+The shortest or geodesic path is the path with the shortest length
+between two nodes. Note that the shortest path does not need to be
+unique.
+The distance between two vertices is the number of edges in a shortest
+path connecting them.
+The diameter is the longest shortest path in a graph, i.e. the distance
+between the two farthest nodes.
+The average path length is the average of the shortest paths between all
+pairs of nodes.
+7
+
+===== Page 152 =====
+NETWORK PROPERTIES: COUNTING WALKS
+8
+
+===== Page 153 =====
+Powers of the adjacency matrix
+While the adjacency matrix of a BDN reads
+A =
+
+)))))
+0 1 1 1 0
+1 0 1 1 0
+1 0 0 0 1
+1 0 1 0 0
+0 1 1 0 0
+
+(
+its square reads
+A2 =
+
+)))))
+3 0 2 1 1
+2 1 2 1 1
+0 2 2 1 0
+1 1 1 1 1
+2 0 1 1 1
+
+(
+9
+
+===== Page 154 =====
+Mathematical intermezzo
+Row by column product. Multiplication of two matrices is deﬁned if
+and only if the number of columns of the left matrix is the same as the
+number of rows of the right matrix.
+If A is an m-by-n matrix and B is an n-by-p matrix, then their matrix
+product AB is the m-by-p matrix whose entries are given by dot product
+of the corresponding row ofA and the corresponding column ofB:
+(AB)ij = ai1b1j + ai2b2j... ainbnj =
+n∑
+r =1
+air brj
+where 1≤ i≤ m and 1≤ j≤ p.
+10
+
+===== Page 155 =====
+Powers of the adjacency matrix
+If A is the adjacency matrix of the directed or undirected graphG, then
+the matrix An (i.e. the matrix product ofn copies of A) has an
+interesting interpretation: the element(i, j) gives the number of (directed
+or undirected) walks of lengthn from vertex i to vertex j.
+This implies, for example, that the number of triangles in an undirected
+graph G is exactly the trace ofA3 divided by 6.
+If n is the smallest, non-negative integer, such that, for somei and j, the
+element (i, j) of An is positive, thenn is the distance between vertexi
+and vertex j.
+11
+
+===== Page 156 =====
+Paths, walks and distances
+12
+
+===== Page 157 =====
+Paths, walks and distances
+If we calculate the cube of the adjacency matrix above, we ﬁnd
+and we can check the number of walks between any two nodes,
+graphically.
+13
+
+===== Page 158 =====
+Paths, walks and distances
+14
+
+===== Page 159 =====
+Paths, walks and distances
+15
+
+===== Page 160 =====
+Paths, walks and distances
+16
+
+===== Page 161 =====
+Powers of the adjacency matrix
+The adjacency matrix can be used to determine whether or not the graph
+is connected.
+A BUN isdisconnected if and only if the adjacency matrix is block-wise:
+A =
+(
+A11 012
+021 A22
+)
+.
+A BDN isreducible if and only if the adjacency matrix can be written as:
+A =
+(
+A11 A12
+021 A22
+)
+.
+A matrix isirreducible (i.e. cannot be written as above) if and only if the
+BDN is strongly connected.
+17
+
+===== Page 162 =====
+NETWORK PROPERTIES: CENTRALITY MEASURES
+18
+
+===== Page 163 =====
+Eccentricity, radius, diameter
+The eccentricity (of a vertexv) is the greatest distance betweenv and
+any other vertex, i.e.
+ϵ(v ) = max
+u
+{d(v, u)}.
+The radius (of a graph) is the minimum eccentricity of any vertex, i.e.
+r = min
+v
+ϵ(v ) = min
+v
+{max
+u
+{d(v, u)}}.
+The diameter (of a graph): the maximum eccentricity of any vertex, i.e.
+d = max
+v
+{ϵ(v )}
+or, equivalently, the longest shortest path in a graph, i.e. the distance
+between the two farthest nodes.
+19
+
+===== Page 164 =====
+Centrality in graph theory
+A central vertex, in a graph of radiusr, is one whose eccentricity is
+ϵ(v ) = r
+that is a vertex that achieves the radius.
+A peripheral vertex, in a graph of diameterd, is one whose eccentricity is
+ϵ(v ) = d
+that is a vertex that achieves the diameter.
+20
+
+===== Page 165 =====
+Centrality in graph theory
+21
+
+===== Page 166 =====
+What and why
+Deﬁnitions from graph theory are too strict. A diﬀerent approach is
+needed.
+The notion ofcentrality of a node ﬁrst arose in the context of social
+sciences and is used in the determination of the ‘most important’ nodes
+in a network.
+There are a number of characteristics, not necessarily correlated, which
+can be used in determining the importance of a node (its ability to
+communicate directly with other nodes, its closeness to many other
+nodes, etc.).
+Considering each of these characteristics leads to diﬀerent centrality
+measures.
+22
+
+===== Page 167 =====
+What and why: examples
+23
+
+===== Page 168 =====
+Degree centrality (undirected)
+The degree centrality counts the number of neighbors of a node:
+ki =
+∑
+j
+aij = (1T· A)i = (A· 1)i ;
+to compare nodes across diﬀerent conﬁgurations, we need to normalize it
+k i = ki
+N−1.
+24
+
+===== Page 169 =====
+Degree centrality (directed)
+Nodes with large degree centrality are nothing else but hubs:
+k out
+i =
+∑
+j
+aij = (A· 1)i and k in
+i =
+∑
+j
+aji = (1T· A)i ;
+to compare nodes across diﬀerent conﬁgurations, we need to normalize it
+k out
+i = k out
+i
+N−1, k in
+i = k in
+i
+N−1.
+25
+
+===== Page 170 =====
+Closeness centrality (undirected)
+Let us deﬁne thefarness from node i as
+fi =
+N∑
+j=1
+(j̸=i)
+≡
+∑
+j
+dij = (D· 1)i ;
+then, we can deﬁne thecloseness centrality of node i as
+ci = 1
+fi
+= 1∑
+j dij
+.
+To compare nodes across diﬀerent conﬁgurations, we need to normalize it
+c i = 1∑
+j dij/(N−1) = N−1∑
+j dij
+.
+26
+
+===== Page 171 =====
+Closeness centrality (undirected)
+All nodes have a close value of closeness centrality.
+Closeness c i = N−1∑
+j dij
+is the inverse of the average farness of a node.
+Notice that it induces a less severe ranking than the one induced by
+degrees.
+27
+
+===== Page 172 =====
+Closeness centrality (directed)
+We can extend the normalized closeness centrality
+c i = 1∑
+j dij/(N−1) = N−1∑
+j dij
+to account for link directionality
+c i = 1∑
+j dij/κi
+= κi∑
+j dij
+where κi is the number of reachable nodes fromi (i.e. following the link
+directions).
+28
+
+===== Page 173 =====
+From closeness to harmonic centrality
+The distance between disconnected nodes isdij = +∞.
+Hence, we can deﬁne theharmonic centrality as
+hi =
+∑
+j
+1
+dij
+and the normalized harmonic centrality as
+hi =
+∑
+j d−1
+ij
+N−1 .
+29
+
+===== Page 174 =====
+Examples of centralities
+A) Betweenness, B) Closeness, C) Eigenvector...
+...D) Degree, E) Harmonic, F) Katz.
+30
+
+===== Page 175 =====
+Betweenness centrality (undirected)
+Betweenness centrality measures the percentage of shortest paths
+crossing a node:
+bi =
+∑
+s̸=i̸=t
+σi
+st
+σst
+where
+• σi
+st: number of shortest paths betweens and t through i;
+• σst: total number of shortest paths betweens and t;
+• σi
+st
+σst
+= 0 if a shortest path betweens and t doesn’t cross i.
+31
+
+===== Page 176 =====
+Betweenness centrality (undirected)
+Nodes have very diﬀerent values of betweenness centrality.
+To normalize the undirected betweenness centrality, we can divide it by
+(N−1)(N−2)
+2 .
+32
+
+===== Page 177 =====
+Betweenness centrality (undirected): an example
+bv0 = (N−1)·0 + (N−1)· 1
+2 + (N−1)(N−6)
+2 ·1 = (N−1)(N−5)
+2
+33
+
+===== Page 178 =====
+Betweenness centrality (undirected): an example
+bv1 = bv4 = 0 and bv2 = bv3 = bv5 = bv6 = 1
+N−2
+34
+
+===== Page 179 =====
+Betweenness centrality (directed)
+We can extend the betweenness centrality to account for link
+directionality
+bi =
+∑
+s̸=i̸=t
+τ i
+st
+τst
+where, now, the shortest paths follow the link directions.
+To normalize the directed betweenness centrality, we can divide it by
+(N−1)(N−2).
+35
+
+===== Page 180 =====
+To sum up
+36
+
+===== Page 181 =====
+To sum up
+Central according to...
+• A: degree centrality;
+• B: closeness centrality;
+• C: betweenness centrality.
+37
+
+===== Page 182 =====
+To sum up
+38
+
+===== Page 183 =====
+A quick look at Bitcoin. . .
+39
+
+===== Page 184 =====
+. . . and at the Bitcoin Lightning Network
+40
+
+===== Page 185 =====
+Bitcoin Lightning Network: a graphic (over)view
+Star structures appear everywhere in the network.
+41
+
+===== Page 186 =====
+Bitcoin Lightning Network: centralities
+Node size is proportional to degree centrality.
+42
+
+===== Page 187 =====
+Bitcoin Lightning Network: centralities
+Node size is proportional to closeness centrality.
+43
+
+===== Page 188 =====
+Bitcoin Lightning Network: centralities
+Node size is proportional to betweenness centrality.
+44
+
+===== Page 189 =====
+NETWORK PROPERTIES: CENTRALIZATION MEASURES
+45
+
+===== Page 190 =====
+Degree-centralization
+What is the most degree-centralized graph structure?
+H =
+∑
+i
+[max{ki}− ki ] = ( N−1)(N−2)
+46
+
+===== Page 191 =====
+Degree-centralization
+How (dis)similar is a graph from a star?
+C =
+∑
+i [max{ki}− ki ]
+H =
+∑
+i [max{ki}− ki ]
+(N−1)(N−2) ≤ 1
+47
+
+===== Page 192 =====
+Closeness-centralization
+How (dis)similar is a graph from a star?
+C =
+∑
+i [max{ci}− ci ]
+(N−1)(N−2)/(2N−3)≤ 1
+48
+
+===== Page 193 =====
+Betweenness-centralization
+How (dis)similar is a graph from a star?
+b1 =
+∑
+s̸=i̸=t
+1 = (N−1)(N−2)
+2 =⇒ C =
+∑
+i [max{bi}− bi ]
+(N−1)2(N−2)/2
+49
+
+===== Page 194 =====
+Questions
+Free network data are available at the URLs
+• https://networkrepository.com/index.php;
+• https://snap.stanford.edu/data/.
+Consider a bunch of binary networks at your choice and answer the
+following questions.
+50
+
+===== Page 195 =====
+Questions
+• rank nodes according to their degree centrality;
+• rank nodes according to their closeness centrality;
+• rank nodes according to their betweenness centrality.
+51
+
+===== Page 196 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+5B. Paths, walks, distances, centralities - II
+Tiziano Squartini
+26 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 197 =====
+NETWORK PROPERTIES: CENTRALITY MEASURES
+2
+
+===== Page 198 =====
+Eigenvector centrality
+To determine the eigenvector centrality, the problem
+Ax = x
+must be solved. To this aim, one needs to solve the problem
+Av =λv
+ﬁnding eigenvalues and eigenvectors of the adjacency matrix.
+Problems like these individuate vectors which are not much aﬀected by a
+linear transformation.
+The only eﬀect is that of returning a vector which is proportional to the
+initial one.
+3
+
+===== Page 199 =====
+Eigenvector centrality
+The components of the Perron-Frobenius eigenvector must be normalized
+(e.g. dividing them by the Euclidean norm).
+Eigenvector centrality can also be found iteratively, i.e. by solving
+x(1) = Ax(0)
+x(2) = Ax(1)
+...
+x(n) = Ax(n−1)
+i.e.
+x(n) = Anx(0).
+4
+
+===== Page 200 =====
+Eigenvector centrality
+x(n) = Anx(0)
+= An∑
+i
+ci vi
+=
+∑
+i
+ci Anvi
+=
+∑
+i
+ciλn
+i vi
+= c1λn
+1v1 +
+∑
+i>1
+ciλn
+i vi
+=λn
+1
+[
+c1v1 +
+∑
+i>1
+ci
+(λn
+i
+λn
+1
+)
+vi
+]
+≃λn
+1c1v1
+=⇒ Ax =λ1x
+5
+
+===== Page 201 =====
+Mathematical intermezzo
+The weak Perron-Frobenius theorem. An adjacency matrix has
+non-negative entries.
+Let A be a non-negativeN× N matrix. Then
+• there exists a positive eigenvalueλ1 > 0 such that for all other
+eigenvalues λ of A holds that|λ|≤ λ1.
+• the eigenvector x corresponding toλ1 contains non-negative entries.
+6
+
+===== Page 202 =====
+Eigenvector centrality
+Take the components of the Perron-Frobenius eigenvector.
+Eigenvector centrality awards hubs and nodes linked to hubs.
+7
+
+===== Page 203 =====
+A quick look at Bitcoin. . .
+8
+
+===== Page 204 =====
+. . . and at the Bitcoin Lightning Network
+9
+
+===== Page 205 =====
+Bitcoin Lightning Network: a graphic (over)view
+Star structures appear everywhere in the network.
+10
+
+===== Page 206 =====
+Bitcoin Lightning Network: centralities
+Is the uneven distribution of the eigenvector centrality a clue of a core?
+11
+
+===== Page 207 =====
+Katz centrality (undirected)
+The degree of the nodei counts the number of walks of length 1 fromi
+to every other node of the network. That is,
+ki = (A· 1)i.
+In 1953, Katz extended this idea to count the walks of any length
+starting at nodei:
+Ki = [(α0A0 +α1A1 +··· +αnAn +... )· 1]i
+=
+[+∞∑
+n=0
+(αnAn)· 1
+]
+i
+= [(I−αA)−1· 1]i
+where α<ρ −1.
+12
+
+===== Page 208 =====
+Mathematical intermezzo
+Let us call
+A = QΛΛΛQ−1 and ρ = max{λi}N
+i=1;
+then
+Ki = [(I +αQΛΛΛQ−1 +··· +αnQΛΛΛnQ−1 +... )· 1]i
+= [(QQ−1 +αQΛΛΛQ−1 +··· +αnQΛΛΛnQ−1 +... )· 1]i
+= [Q(I +αΛΛΛ +··· +αnΛΛΛn +... )Q−1· 1]i.
+The series ‘in between’ can be considered a matrix if...
+[(I−αΛΛΛ)−1]ii =
++∞∑
+n=0
+(αλi)n = 1
+1−αλi
+⇐⇒αρ< 1⇐⇒α<ρ −1
+13
+
+===== Page 209 =====
+Mathematical intermezzo
+and
+Ki = [Q(I−αΛΛΛ)−1Q−1· 1]i
+= [(Q(I−αΛΛΛ)Q−1)−1· 1]i
+= [(QQ−1−αQΛΛΛQ−1)−1· 1]i
+= [(I−αA)−1· 1]i.
+To sum up, if the series converges (i.e. ifα<ρ −1) then
+Ki = [(I−αA)−1· 1]i.
+14
+
+===== Page 210 =====
+Katz centrality
+A node withk in
+i = 0 induces a null eigenvector centrality to its neighbors:
+K out
+i = [(I−αA)−1· 1]i and K in
+i = [1T· (I−αA)−1]i.
+15
+
+===== Page 211 =====
+Examples of centralities
+A) Betweenness, B) Closeness, C) Eigenvector...
+...D) Degree, E) Harmonic, F) Katz.
+16
+
+===== Page 212 =====
+PageRank centrality
+Eigenvector centrality requires to solve
+ρ−1Ax = x =⇒ x∝ v1
+i.e. ﬁnding the leading eigenvector ofA.
+Katz centrality requires to solve
+αAx + 1 = x =⇒ x = (I−αA)−1· 1
+the leading eigenvector ofA being the limit of Katz centrality as
+α→ρ−1.
+17
+
+===== Page 213 =====
+PageRank centrality
+PageRank centrality requires to solve
+αBx +β1 = x =⇒ x = (I−αB)−1·βββ
+to suppress the centrality of nodes pointed by hubs.
+If aji = 1, a walker moves fromj to i with probability
+pji = α
+k out
+j
++ 1−α
+N ;
+if aji = 0 such a probability becomes
+pji = 1−α
+N
+(in a sense, the walker ‘jumps’ fromj to i).
+18
+
+===== Page 214 =====
+PageRank centrality
+19
+
+===== Page 215 =====
+To sum up
+Central according to...
+• D: eigenvector centrality;
+• E: Katz centrality;
+• F: Alpha centrality.
+20
+
+===== Page 216 =====
+To sum up
+21
+
+===== Page 217 =====
+Questions
+Free network data are available at the URLs
+• https://networkrepository.com/index.php;
+• https://snap.stanford.edu/data/.
+Consider a bunch of weighted networks at your choice and answer the
+following questions.
+22
+
+===== Page 218 =====
+Questions
+• rank nodes according to their eigenvector centrality;
+• rank nodes according to their Katz centrality;
+• rank nodes according to their PageRank centrality (when BDNs are
+considered).
+23
+
+===== Page 219 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+6A. A primer on static models: Erdös-Rényi model
+Tiziano Squartini
+26 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 220 =====
+Erdös and Rényi
+2
+
+===== Page 221 =====
+Erdös’ original sin and Gilbert’s less popular sin
+3
+
+===== Page 222 =====
+Gilbert model: random variables
+Erdös-Rényi Random Graph Model: actually, the Gilbert model!
+A graph is a collection of i.i.d. random variables.
+Each variable can be represented via the followingﬁnite scheme
+aij∼
+(
+0 1
+1−p p
+(
+i.e. it is aBernoulli random variable whose distribution reads
+aij∼ Ber(p)
+for all undirected node pairs.
+4
+
+===== Page 223 =====
+Gilbert model: random variables
+Each variable...
+...is a Bernoulli random variable.
+5
+
+===== Page 224 =====
+Gilbert model: random variables
+A (binary undirected) network...
+...is a collection of Bernoulli random variables.
+6
+
+===== Page 225 =====
+Gilbert model: random variables
+7
+
+===== Page 226 =====
+The ﬁrst ensemble of graphs
+First example ofensemble of networks.
+We consider BUNs, i.e. Binary, Undirected Networks.
+8
+
+===== Page 227 =====
+Mathematical intermezzo
+A graph as a random variable.To assign a probability to a graph, one
+can proceed by taking the direct product of the single ﬁnite schemes, i.e.
+G∼
+⨂ (
+0 1
+1−p p
+(
+=
+(
+00... ... 11...
+(1−p)(1−p)... ... pp...
+(
+;
+upon doing so, one obtains a ﬁnite scheme for the entire graph, now seen
+as a random variable whose values arebinary stringswith probabilities
+equal to the product of the single link probabilities.
+9
+
+===== Page 228 =====
+The Gilbert ensemble
+What is the cardinality of the Gilbert ensemble?
+• we have
+(N
+2
+)
+possible binary states;
+• each node pair can either be linked or not;
+• hence, we have
+|G| = 2×2×2×···× 2  (
+N
+2
+)
+times
+= 2(
+N
+2)
+possible BUNs.
+10
+
+===== Page 229 =====
+The Gilbert ensemble
+Let us represent a graph via its adjacency matrix,A.
+The number of links can be calculated as
+L =
+∑
+i<j
+aij ;
+hence, the probability of a generic graph withL links read
+P(A|L) =
+∏
+i<j
+paij (1−p)1−aij
+= p
+∑
+i<j aij
+(1−p)
+∑
+i<j (1−aij )
+= pL(1−p)(
+N
+2)−L
+11
+
+===== Page 230 =====
+The Gilbert ensemble
+• how many (undirected) networks can you generate?
+|G| = 2(
+N
+2)
+• what is the probability of the empty network?
+P(A|L = 0) = (1−p)(
+N
+2)
+• what is the probability of the full network?
+P
+(
+A
+⏐⏐⏐⏐L = N(N−1)
+2
+)
+= p(
+N
+2)
+• what is the probability of a generic network?
+P(A|L) = pL(A)(1−p)(
+N
+2)−L(A)
+12
+
+===== Page 231 =====
+Bernoulli+Bernoulli+Bernoulli+... =binomial
+The sum of Bernoulli i.i.d. random variables is binomial:
+The binomial coeﬃcient: # of ways you can achieve success.
+13
+
+===== Page 232 =====
+The distribution ofL
+L is the number of successes met inN(N−1)
+2 ≡
+(N
+2
+)
+i.i.d. trials.
+Hence, it follows the binomial distribution
+L∼ Bin
+(N(N−1)
+2 ,p
+)
+i.e.
+Pr(L = x ) =
+(N(N−1)
+2
+x
+)
+px (1−p)
+N(N−1)
+2 −x
+with
+⟨L⟩ = N(N−1)
+2 p.
+14
+
+===== Page 233 =====
+The distribution ofL
+15
+
+===== Page 234 =====
+THE ERDÖS-RÉNYI MODEL:
+LOCAL PROPERTIES
+16
+
+===== Page 235 =====
+The distribution of the degree
+The degree of a node is the number of its neighbors:
+ki =
+∑
+j
+aij.
+ki is the number of successes met in(N−1) i.i.d. trials, i.e.
+ki∼ Bin(N−1,p);
+ki obeys a binomial distribution:
+Pr(ki = k) =
+(N−1
+k
+)
+pk (1−p)N−1−k≃ c k
+k!e−c = Pois(c).
+17
+
+===== Page 236 =====
+The distribution of the degree
+The expected value of the degree of a node is
+⟨ki⟩ = (N−1)p≃ Np≡ c
+(alternative calculation:⟨ki⟩ = ∑
+j⟨aij⟩ = ∑
+j p = (N−1)p).
+All degrees have the same expected value and a scale exists. In fact,
+Var[ki ] =
+∑
+j
+Var[aij ] =
+∑
+j
+p(1−p) = (N−1)p(1−p)
+i.e. the variance is ﬁnite and the meter of variation reads
+σ[ki ] =
+⨂
+(N−1)p(1−p)≃
+⨂
+(N−1)p =√c.
+18
+
+===== Page 237 =====
+The distribution of the degree
+19
+
+===== Page 238 =====
+The degree distribution
+20
+
+===== Page 239 =====
+The degree distribution
+21
+
+===== Page 240 =====
+THE ERDÖS-RÉNYI MODEL:
+MESOSCALE PROPERTIES
+22
+
+===== Page 241 =====
+Diﬀerent regimes
+https://www.ndsu.edu/pubweb/∼novozhil/Teaching/767%20Data/36_pdfsam_notes.pdf
+23
+
+===== Page 242 =====
+Diﬀerent regimes
+The order parameter of this phase transition is the average degree, i.e.
+p = 2L
+N(N−1) =
+∑
+i ki
+N(N−1) = k
+N−1≃ k
+N≡ c
+N
+There are three phases:
+• if c < 1, there is no GCC. The size of the biggest component is
+O(lnN);
+• if c = 1, one single component of sizeO(N 2/3) appears;
+• if c > 1, one single GCC of sizeO(N) appears. Other components
+are O(lnN).
+24
+
+===== Page 243 =====
+Diﬀerent regimes
+25
+
+===== Page 244 =====
+Simple explanation forc = 1
+The expected number of the neighbors of a node neighbors, according to
+the Gilbert model, reads
+k (2)
+i =
+∑
+j
+aij
+∑
+l
+ajl =
+∑
+j
+aijkj
+⟨k (2)
+i ⟩ER =
+⟨∑
+j
+∑
+l
+aijajl
+⟩
+=
+∑
+j
+∑
+l
+⟨aijajl⟩
+=
+∑
+j
+∑
+l
+⟨aij⟩⟨ajl⟩
+≃ N 2p2 = (Np)2 = c 2
+26
+
+===== Page 245 =====
+Simple explanation forc = 1
+The expected number of the neighbors of the neighbors of a node
+neighbors, according to the Gilbert model, reads
+k (3)
+i =
+∑
+j
+aij
+∑
+l
+ajl
+∑
+m
+alm
+⟨k (3)
+i ⟩ER =
+⟨∑
+j
+∑
+l
+∑
+m
+aijajlalm
+⟩
+=
+∑
+j
+∑
+l
+∑
+m
+⟨aijajlalm⟩
+=
+∑
+j
+∑
+l
+∑
+m
+⟨aij⟩⟨ajl⟩⟨alm⟩
+≃ N 3p3 = (Np)3 = c 3
+27
+
+===== Page 246 =====
+Simple explanation forc = 1
+In conclusions, the expected number of nodes at a distanceD from i is
+⟨N (D)⟩ = 1 +c +c 2 +c 3 +··· +c D≃ c D.
+We can imagine that the diameter of a network coincides withN. Hence:
+N =⟨N (D)⟩≃ c D =⇒ D≃ lnN
+lnc .
+A critical value is present: ifc→ 1, i.e. p→ 1
+N, then
+D→ +∞;
+on the other hand, ifc ≳ 1, i.e. p ≳ 1
+N, then
+D∝ lnN.
+28
+
+===== Page 247 =====
+Small-world -ness
+29
+
+===== Page 248 =====
+THE ERDÖS-RÉNYI MODEL:
+DRAWBACKS
+30
+
+===== Page 249 =====
+The drawbacks of a model...
+The Gilbert model has several problems:
+• networks have a small diameter but also a small clustering:
+⟨D⟩ER∝ lnN, ⟨C⟩ER = p;
+• the degree distribution is binomial:
+Pr(ki = k) =
+(N−1
+k
+)
+pk (1−p)N−1−k ;
+• all nodes have the same expected degree:
+⟨ki⟩ER = (N−1)p = 2L
+N .
+31
+
+===== Page 250 =====
+The drawbacks of a model...
+32
+
+===== Page 251 =====
+...and possible solutions
+The Gilbert model has several problems:
+• networks have a small diameter but also a small clustering:
+Solution: see the Watts-Strogatz model;
+• the degree distribution is binomial:
+Solution: networks grow! See the Barabasi-Albert model;
+• all nodes have the same expected degree:
+Solution: networks grow! See the Barabasi-Albert model.
+33
+
+===== Page 252 =====
+...and possible solutions
+The solution seems to be the dynamics...
+...what about a diﬀerent static model?
+34
+
+===== Page 253 =====
+Questions
+• how would you sample the Erdös-Rényi ensemble? Write a code
+allowing you to cample it by varyingN and p;
+• what is the ensemble average ofaij, ki, k nn
+i , ci?
+• what is the ensemble distribution ofki?
+• what is the ensemble distribution ofkj with j̸= i? Was this an
+expected result?
+35
+
+===== Page 254 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+6B. A primer on static models: MaxEnt model
+Tiziano Squartini
+27 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 255 =====
+What is the problem?
+2
+
+===== Page 256 =====
+What is the problem?
+3
+
+===== Page 257 =====
+Balance sheets
+Since ei = ai− li, a negative equity (ei < 0) impliesdefault.
+4
+
+===== Page 258 =====
+How contagion propagates
+5
+
+===== Page 259 =====
+How contagion propagates
+6
+
+===== Page 260 =====
+How contagion propagates
+7
+
+===== Page 261 =====
+Financial data are partial
+However, ﬁnancial data sets arepartial, since
+• thresholded;
+• aggregate;
+• available for single countries only;
+• available for small subsets only.
+8
+
+===== Page 262 =====
+Financial data are partial
+9
+
+===== Page 263 =====
+The most common case
+An interbank network is a weighted, directed matrix.
+The only information is provided byassets (properties)
+ai≡
+∑
+j
+wij = s out
+i
+and liabilities (debts)
+li≡
+∑
+j
+wji = s in
+i .
+From the constraints to the matrix: how?
+10
+
+===== Page 264 =====
+Early entropy maximization
+11
+
+===== Page 265 =====
+Early entropy maximization
+The philosophy is that of considering a function(al) summing up the
+uncertainty one has about a system.
+Shannon entropy is such a functional:
+S =−
+∑
+i
+∑
+j
+wij ln wij.
+Maximizing it means maximizing the uncertainty...except for what is
+know, i.e.
+{s out
+i }N
+i=1 and {s in
+i }N
+i=1.
+One derives a probability distribution.
+12
+
+===== Page 266 =====
+Early entropy maximization
+Problem. Determine the weights of a matrix
+W =
+
+
+? ? ? ? ?
+? ? ? ? ?
+? ? ? ? ?
+? ? ? ? ?
+? ? ? ? ?
+
+[[[[[
+given the marginals.
+Solution. Maximize
+S =−
+∑
+i
+∑
+j
+wij ln wij
+under the constraintsai = ∑
+j wij and li = ∑
+j wji,∀ i.
+13
+
+===== Page 267 =====
+Beyond Erdös: the Chung-Lu model
+The Gilbert model predicts a probability of connection which is the same
+for all node pairs.
+A solution can be that of deﬁning probabilities that distinguish between
+diﬀerent node pairs, e.g.
+f (xi, xj ) = xi xj
+for BUNs and
+f (xi, yj ) = xi yj
+for BDNs.
+14
+
+===== Page 268 =====
+Beyond Erdös: the Chung-Lu model
+To determinexi let us impose that the strengths are preserved, i.e.
+ai =
+∑
+j
+f (xi, yj ) =⟨ai⟩;
+this leads us to ﬁndai = ∑
+j (xi yj ) =⇒ xi = ai∑
+j yj
+.
+To determineyj let us impose that the strengths are preserved, i.e.
+lj =
+∑
+i
+f (xi, yj ) =⟨lj⟩;
+this leads us to ﬁndlj = ∑
+i (xi yj ) =⇒ yj = lj∑
+i xi
+.
+15
+
+===== Page 269 =====
+Beyond Erdös: the Chung-Lu model
+But
+∑
+i
+xi =
+∑
+i
+ai∑
+j yj
+= W∑
+j yj
+=⇒ W =
+∑
+i
+xi
+∑
+j
+yj ;
+hence
+f (xi, yj ) = xi yj = ai lj∑
+i xi
+∑
+j yj
+= ai lj
+W =⟨wij⟩.
+Not all weights are created equal: we have solved the problem of the
+Gilbert model!
+16
+
+===== Page 270 =====
+Mathematical intermezzo
+MaxEnt method. The constrained entropy maximization can be carried
+out by solving
+argmaxwij
+{
+S−
+∑
+i
+αi
+[
+ai−
+∑
+j
+wij
+]
+−
+∑
+i
+βi
+[
+li−
+∑
+j
+wji
+]}
+i.e.
+argmaxwij
+{
+S−
+∑
+i
+αi
+[
+ai−
+∑
+j
+wij
+]
+−
+∑
+j
+βj
+[
+lj−
+∑
+i
+wij
+]}
+,
+an expression ...
+17
+
+===== Page 271 =====
+Mathematical intermezzo
+...leading to
+− ln wij−1− (αi +βj ) = 0 =⇒ wij = e−(αi + 1
+2 )e−(βj + 1
+2 ).
+By using the constraints
+ai =
+∑
+j
+wij =
+∑
+j
+e−(αi + 1
+2 )e−(βj + 1
+2 )
+one determines the multipliers as follows:
+e−(αi + 1
+2 ) = ai
+∑
+j e−(βj + 1
+2 ) and e−(βj + 1
+2 ) = lj
+∑
+i e−(αi + 1
+2 ).
+18
+
+===== Page 272 =====
+Mathematical intermezzo
+Hence,
+e−(αi + 1
+2 )e−(βj + 1
+2 ) = ai lj
+∑
+i e−(αi + 1
+2 )· ∑
+j e−(βj + 1
+2 ) ;
+the denominator, however, is nothing else than the total weight, i.e.
+W =
+∑
+i
+e−(αi + 1
+2 )·
+∑
+j
+e−(βj + 1
+2 ) =
+∑
+i
+ai =
+∑
+j
+lj.
+Hence, early entropy maximization attempts led to
+⟨wij⟩ = ai lj
+W ∀ i, j
+This is known asMaxEnt model.
+19
+
+===== Page 273 =====
+MaxEnt, WTW and e-MID
+Factorized approaches are common in economics.
+They are good to reproduce weights.
+20
+
+===== Page 274 =====
+MaxEnt and WTW
+Factorized approaches are common in economics.
+They are good to reproduce weights.
+21
+
+===== Page 275 =====
+MaxEnt and WTW
+22
+
+===== Page 276 =====
+The Chung-Lu model: pros
+Pros:
+• ensures node heterogeneity;
+• easy to calculate:⟨wij⟩ = ai lj
+W ;
+• satisﬁes the weighted, directed constraints:⟨ai⟩ = ai and⟨li⟩ = li.
+23
+
+===== Page 277 =====
+MaxEnt and e-MID
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+The MaxEnt method is not good to reproduce the topology.
+In fact, it predicts are far too dense network.
+24
+
+===== Page 278 =====
+The Chung-Lu model: cons
+Cons:
+• self loops must be allowed;
+• no zeros predictable, unlessai = 0 or lj = 0;
+• no probability distribution can be deﬁned.
+25
+
+===== Page 279 =====
+Contagion and topology
+Features of a market:completeness and interconnectedness.
+A complete market is described by afully connected matrix .
+An interconnected market is described bya strongly connected matrix .
+26
+
+===== Page 280 =====
+Contagion and topology
+27
+
+===== Page 281 =====
+Implications for ﬁnance
+MaxEnt predicts a fully connected matrix but...
+• ...a fully connected matrix underestimate the risk of contagion;
+• ...a fully connected matrix tends to spread the debt as evenly as
+possible.
+As complete networks underestimate the risk of contagion, some sparsity
+is needed!
+28
+
+===== Page 282 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+7. Early network-reconstruction models
+Tiziano Squartini
+27 June 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 283 =====
+Following the horse-race
+2
+
+===== Page 284 =====
+Following the horse-race
+3
+
+===== Page 285 =====
+Following the horse-race
+4
+
+===== Page 286 =====
+Following the horse-race
+5
+
+===== Page 287 =====
+BEYOND MAXENT:
+SEARCHING FOR THE ZEROS - I
+6
+
+===== Page 288 =====
+Perturbed MaxEnt
+7
+
+===== Page 289 =====
+Perturbed MaxEnt
+• MaxEnt is the benchmark:
+S =−
+∑
+i
+∑
+j
+wij ln wij =⇒ w ME
+ij = ai lj
+W ;
+• perturb each pair-speciﬁc outcome, by drawing a number as
+uij∼ U[0,2w ME]
+i.e. from a uniform distribution whose range is[0,2w ME]. Thus,
+µ = w ME
+i.e. each entry coincides, on average, with MaxEnt.
+8
+
+===== Page 290 =====
+Perturbed MaxEnt
+9
+
+===== Page 291 =====
+Perturbed MaxEnt
+10
+
+===== Page 292 =====
+Perturbed MaxEnt
+11
+
+===== Page 293 =====
+Perturbed MaxEnt...revisited
+• Perturbed MaxEnt produces denser than observed networks;
+• few zeros expected: randomly put some elements to zero;
+• are the constraints satisﬁed? If not, adjust the entries to satisfy the
+constraints.
+12
+
+===== Page 294 =====
+Perturbed MaxEnt...revisited
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+The perturbed MaxEnt method is not good to reproduce the topology!
+In fact, it predicts a random topology.
+13
+
+===== Page 295 =====
+BEYOND MAXENT:
+SEARCHING FOR THE ZEROS - II
+14
+
+===== Page 296 =====
+At the opposite extreme of MaxEnt
+MaxEnt and similar algorithms fail to reconstruct a matrix because they
+predict a too large density. Researchers have, thus, proposed a drastic
+‘change of paradigm’, on the basis of the following reasoning.
+MaxEnt produces denser-than-observed networks, hence underestimating
+the systemis risk: in a sense, MaxEnt helps providing a lower bound to
+systemic risk. Hence, why don’t we put an upper bound to it?
+In other words, if the MaxEnt approach is not satisfactory, do exactly the
+opposite!
+15
+
+===== Page 297 =====
+Minimum-density algorithm: an overview
+16
+
+===== Page 298 =====
+Minimum-density algorithm
+17
+
+===== Page 299 =====
+Minimum-density algorithm
+First, select a pair of banks according to the probability
+pij∝ max
+{ai
+lj
+, lj
+ai
+}
+;
+then, load the link with a fraction of weight given by
+min{ai, lj}
+i.e. the maximum possible value in order to satisfy one constraint in one
+step.
+18
+
+===== Page 300 =====
+Minimum-density algorithm
+Then, select a pair of banks according to the probability
+pij∝ max
+{∆ai
+∆lj
+, ∆lj
+∆ai
+}
+where allocation vectors are updated as follows:
+∆a(t)
+i = ai− a(t−1)
+i ,
+∆l (t)
+j = lj− l (t−1)
+j .
+Naturally, loading a weight becomes
+min{∆ai, ∆lj}.
+19
+
+===== Page 301 =====
+Minimum-density algorithm
+20
+
+===== Page 302 =====
+Minimum-density algorithm
+21
+
+===== Page 303 =====
+Minimum-density algorithm
+22
+
+===== Page 304 =====
+Minimum-density algorithm
+23
+
+===== Page 305 =====
+Minimum-density algorithm
+24
+
+===== Page 306 =====
+Minimum-density algorithm
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+The perturbed MaxEnt method is not good to reproduce the topology.
+In fact, it predicts a far too sparse network.
+25
+
+===== Page 307 =====
+Minimum-density algorithm...revisited
+Then, select a pair of banks according to the probability
+pij∝ max
+{∆ai
+∆lj
+, ∆lj
+∆ai
+}
+where allocation vectors are updated as follows:
+∆a(t)
+i = ai− a(t−1)
+i ,
+∆l (t)
+j = lj− l (t−1)
+j .
+If loading a weight can be redeﬁned as
+λ·min{∆ai, ∆lj}
+link density can be tuned.
+26
+
+===== Page 308 =====
+Minimum-density algorithm...revisited
+27
+
+===== Page 309 =====
+BEYOND MAXENT:
+SEARCHING FOR THE ZEROS - III
+28
+
+===== Page 310 =====
+Back to the original problem
+29
+
+===== Page 311 =====
+The IPF algorithm
+Maximize Shannon entropy
+S =−
+∑
+i
+∑
+j
+wij ln wij =⇒ w ME
+ij = ai lj
+W ;
+then, impose some zeros. Are constraints still satisﬁed?
+W =
+
+)))))))
+0 ? ? 0 ? ?
+? 0 ? ? 0 0
+? 0 0 ? ? ?
+? 0 ? 0 ? ?
+? ? 0 ? 0 ?
+? ? 0 ? ? 0
+
+[[[[[[[(
+An algorithm exists! It is theIterative Proportional Fitting(IPF).
+30
+
+===== Page 312 =====
+Mathematical intermezzo
+The IPF algorithm.From Shannon entropy to the Kullback-Leibler
+divergence:
+DKL(P||Q) =
+∑
+i
+∑
+j
+wij ln
+(
+wij
+w (0)
+ij
+)
+;
+its constrained minimization
+argminwij
+{
+DKL−
+∑
+i
+αi
+[
+ai−
+∑
+j
+wij
+]
+−
+∑
+i
+βi
+[
+li−
+∑
+j
+wji
+]}
+leads to
+wij = w (0)
+ij e1−αi −βj.
+31
+
+===== Page 313 =====
+Mathematical intermezzo
+Let us rewrite it as
+wij = e1/2−αi w (0)
+ij e1/2−βj
+and use the condition on the marginals, i.e.
+ai =
+∑
+j
+e1/2−αi w (0)
+ij e1/2−βj,
+lj =
+∑
+i
+e1/2−αi w (0)
+ij e1/2−βj ;
+one obtains two coupled sets of equations.
+32
+
+===== Page 314 =====
+The IPF algorithm: ﬁrst formulation
+The equations above cannot be solved in closed form:
+e1/2−αi = ai
+∑
+j w (0)
+ij e1/2−βj
+,
+e1/2−βj = lj
+∑
+i w (0)
+ij e1/2−αi
+;
+one can proceed numerically, in an iterative fashion. Let us pose
+e1/2−αi≡θi,
+e1/2−βj≡ηj;
+33
+
+===== Page 315 =====
+The IPF algorithm: ﬁrst formulation
+upon doing so, we can write
+θi = ai
+∑
+j w (0)
+ij ηj
+,
+ηj = lj
+∑
+i w (0)
+ij θi
+;
+and proceed numerically, in an iterative fashion:
+θ(t+1)
+i = ai
+∑
+j w (0)
+ij η(t)
+j
+,
+η(t+1)
+j = lj
+∑
+i w (0)
+ij θ(t+1)
+i
+.
+34
+
+===== Page 316 =====
+Mathematical intermezzo
+First, let us consider a very simple case:
+• w (0)
+ij = 1,∀ i, j;
+• η(0)
+j = lj,∀ j.
+Let us rewrite the system as
+θ(1)
+i = ai∑
+j lj
+= ai
+W,
+η(1)
+j = lj W∑
+i ai
+= lj,
+35
+
+===== Page 317 =====
+Mathematical intermezzo
+θ(2)
+i = ai∑
+j lj
+= ai
+W,
+η(2)
+j = lj W∑
+i ai
+= lj;
+IPF converges to MaxEnt after two iterations, i.e.
+wij = e1/2−αi w (0)
+ij e1/2−βj
+=θi w (0)
+ij ηj
+−→ ai lj
+W .
+36
+
+===== Page 318 =====
+The IPF algorithm: ﬁrst formulation
+In the general case, the system
+θ(t+1)
+i = ai
+∑
+j w (0)
+ij η(t)
+j
+,
+η(t+1)
+j = lj
+∑
+i w (0)
+ij θ(t+1)
+i
+;
+can be initialized asη(0)
+j = 1,∀ j.
+37
+
+===== Page 319 =====
+The IPF algorithm: second formulation
+An alternative formulation is provided by the formulas
+w (t)
+ij = ai
+(
+w (t−1)
+ij
+∑
+k w (t−1)
+ik
+)
+,
+w (t+1)
+ij = lj
+(
+w (t)
+ij
+∑
+k w (t)
+kj
+)
+that re-distribute the marginals on the positive elements.
+As initial guess, you can input the MaxEnt matrix.
+38
+
+===== Page 320 =====
+Mathematical intermezzo
+If w (0)
+ij = ai lj
+W and the matrix is fully connected, we get
+w (1)
+ij = ai
+( lj∑
+k lk
+)
+,
+w (2)
+ij = lj
+(
+ai lj
+W ∑
+k
+ak lj
+W
+)
+and convergence to MaxEnt is obtained after two iterations. In fact:
+w (1)
+ij = ai lj
+W and w (2)
+ij = ai lj
+W .
+39
+
+===== Page 321 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+8A. Statistical mechanics of networks: theory
+Tiziano Squartini
+03 July 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 322 =====
+Back to Chung-Lu model
+The Gilbert model predicts a probability of connection which is the same
+for all node pairs.
+A solution can be that of deﬁning probabilities that distinguish between
+diﬀerent node pairs, e.g.
+f (xi , xj ) = xi xj
+for BUNs and
+f (xi , yj ) = xi yj
+for BDNs.
+2
+
+===== Page 323 =====
+The Chung-Lu model for BUNs
+To determinexi let us impose that the degrees are preserved, i.e.
+ki =
+∑
+j
+f (xi , xj ) =⟨ki⟩;
+this leads us to ﬁnd
+ki =
+∑
+j
+(xi xj ) =⇒ xi = ki∑
+j xj
+.
+Let us sum overi: we ﬁnd (∑
+i xi )2 = 2L =⇒ ∑
+i xi =
+√
+2L and
+xi = ki√
+2L
+=⇒ f (xi , xj ) = xi xj = ki kj
+2L .
+3
+
+===== Page 324 =====
+The Chung-Lu model for BUNs
+Hence, the entries of our adjacency matrix now obey the recipe
+aij∼ Ber(pij )
+or, more explicitly,
+aij =
+{
+1, with probability pij
+0, with probability 1− pij
+where
+⟨aij⟩ = pij = ki kj
+2L .
+Each pair of nodes is assumed to be independent from the others.
+4
+
+===== Page 325 =====
+The Chung-Lu model for BDNs
+To determinexi let us impose that the degrees are preserved, i.e.
+k out
+i =
+∑
+j
+f (xi , yj ) =⟨k out
+i ⟩,
+k in
+j =
+∑
+i
+f (xi , yj ) =⟨k in
+j ⟩;
+this leads us to ﬁnd
+k out
+i =
+∑
+j
+(xi yj ) =⇒ xi = k out
+i∑
+j yj
+,
+k in
+j =
+∑
+i
+(xi yj ) =⇒ yj = k in
+j∑
+i xi
+.
+5
+
+===== Page 326 =====
+The Chung-Lu model for BDNs
+Let us sum overi or over j. We ﬁnd
+(∑
+i
+xi
+( (∑
+j
+yj
+(
+= L;
+hence
+xi = k out
+i√
+L
+and yj = k in
+j√
+L
+inducing
+f (xi , yj ) = xi yj = k out
+i√
+L
+· k in
+j√
+L
+= k out
+i k in
+j
+L .
+6
+
+===== Page 327 =====
+The Chung-Lu model for BDNs
+Hence, the entries of our adjacency matrix now obey the recipe
+aij∼ Ber(pij )
+or, more explicitly,
+aij =
+{
+1, with probability pij
+0, with probability 1− pij
+where
+⟨aij⟩ = pij = k out
+i k in
+j
+L .
+Each pair of nodes is assumed to be independent from the others.
+7
+
+===== Page 328 =====
+Mathematical intermezzo
+Maximize the functional
+S =−
+∑
+i
+∑
+j
+pij ln pij
+under the constraints:
+• row-margins, i.e. ∑
+j pij = k out
+i ;
+• column-margins, i.e. ∑
+i pij = k in
+j ;
+• ‘normalization’, i.e. ∑
+i
+∑
+j pij = L.
+8
+
+===== Page 329 =====
+Mathematical intermezzo
+By doing the calculations, one ﬁnds that
+argmaxpij
+{
+S−
+∑
+i
+αi
+)
+k out
+i −
+∑
+j
+pij
+]
+−
+∑
+i
+βi
+)
+k in
+i −
+∑
+j
+pji
+]}
+leads to
+− ln pij−1− (αi + βj ) = 0
+i.e. to the factorized probability distribution
+pij = e−(αi +1/2)e−(βj +1/2) =⇒ pij = k out
+i k in
+j
+L .
+Analogously for the undirected case.
+9
+
+===== Page 330 =====
+The Chung-Lu model: pros
+Pros:
+• ensures node heterogeneity;
+• easy to calculate:⟨aij⟩ = ki kj
+2L ;
+• satisﬁes the binary, undirected constraints:⟨ki⟩ = ki;
+• easy to generalize to directed networks:⟨aij⟩ =
+k out
+i k in
+j
+L ;
+• satisﬁes the binary, directed constraints:⟨k out
+i ⟩ = k out
+i and
+⟨k in
+i ⟩ = k in
+i .
+10
+
+===== Page 331 =====
+The Chung-Lu model: cons
+Cons:
+• self loops must be allowed;
+• no zeros predictable, unlessai = 0 or lj = 0;
+• no probability distribution can be deﬁned;
+• higher-order trends are still ﬂat;
+• it is not always a probability.
+11
+
+===== Page 332 =====
+Mathematical intermezzo
+The fourth point can be explicitly seen upon considering that
+k nn
+i =
+∑
+j aij kj
+ki
+=
+∑
+j
+∑
+k aij ajk
+∑
+j aij
+has the following expected values
+⟨k nn
+i ⟩ER =
+∑
+j
+∑
+k p2
+∑
+j p ≃ N 2p2
+Np = Np
+⟨k nn
+i ⟩CL =
+∑
+j⟨aij⟩⟨kj⟩
+⟨ki⟩ =
+∑
+j ki kj⟨kj⟩
+2L⟨ki⟩ =
+∑
+j ki (k 2
+j )
+2Lki
+=
+∑
+j k 2
+j
+2L = N
+N
+∑
+j k 2
+j
+2L = m′
+2
+m′
+1
+i.e. the same for each node.
+12
+
+===== Page 333 =====
+Mathematical intermezzo
+Analogously,
+s nn
+i =
+∑
+j wij sj
+si
+=
+∑
+j
+∑
+k wij wjk
+∑
+j wij
+has the following expected value
+⟨s nn
+i ⟩CL =
+∑
+j⟨wij⟩⟨sj⟩
+⟨si⟩ =
+∑
+j si sj⟨sj⟩
+2W⟨si⟩ =
+∑
+j si (s 2
+j )
+2Wsi
+=
+∑
+j s 2
+j
+2W = N
+N
+∑
+j s 2
+j
+2W = m′
+2
+m′
+1
+i.e. the same for each node.
+13
+
+===== Page 334 =====
+The Chung-Lu model
+A major drawback of CL model is that of allowing
+pCL
+ij > 1
+when max{ki}N
+i=1 >
+√
+2L and there are two nodes with maximum degree.
+Imagine two star-graphs connected by a link:
+14
+
+===== Page 335 =====
+The Chung-Lu model
+Imagine two star-graphs connected by a link.
+If N = 12 and
+the two hubs are connected with probability
+pij =
+(N
+2−1
+)2
+2(N−1)−→ N
+8 > 1
+15
+
+===== Page 336 =====
+STATISTICAL MECHANICS OF NETWORKS - I
+16
+
+===== Page 337 =====
+What is statistical physics?
+Statistical physics was born to study the behavior of systems composed
+by a large number of components.
+Think of a gas in a box whose number of components amounts at≃ 1023.
+17
+
+===== Page 338 =====
+What is statistical physics?
+A deterministic approach was unfeasible.
+Hence physicists introduced the concept of probability (in physics!).
+18
+
+===== Page 339 =====
+What is statistical physics?
+Problem. What is the probability to observe a system with energyE and
+number of particlesN?
+Principle of insuﬃcient reason.If we want to assign probabilities to an
+event, and see no reason for one outcome to occur more often than any
+other, then the events are assigned equal probabilities.
+19
+
+===== Page 340 =====
+What is statistical physics?
+Problem. What is the probability to observe a system with energyE and
+number of particlesN?
+Solution. Maximum entropy principle.
+20
+
+===== Page 341 =====
+...it is a methodology!
+21
+
+===== Page 342 =====
+...it is a methodology!
+22
+
+===== Page 343 =====
+Measuring uncertainty
+Let us measure ouruncertainty about the ‘right’ conﬁguration:
+I(G) =− ln P(G)
+23
+
+===== Page 344 =====
+Introducing Shannon entropy
+I is known asself-information.
+Let us averageI over the ensemble, i.e.
+S =
+∑
+G∈G
+P(G)I(G) =−
+∑
+G∈G
+P(G) ln P(G)
+and we obtainShannon entropy.
+It is commonly understood as a measure of disorder of a
+system/uncertainty about its state.
+24
+
+===== Page 345 =====
+Statistical physics for networks
+The conﬁguration of a network is one among many (they are called
+ensemble).
+Which ensemble of networks? Microcanonical, canonical ensembles.
+25
+
+===== Page 346 =====
+Choosing the constraints
+However, we know something.
+1) probabilities must be normalized:
+∑
+G∈G
+P(G) = 1
+2) the value of some quantities is known:
+∑
+G∈G
+P(G)Xi (G) =⟨Xi⟩,∀ i
+We must make the least biased guess about what is unknown .
+26
+
+===== Page 347 =====
+Shannon entropy optimization
+The constrained optimization of Shannon entropy leads to:
+L = S− θ0
+)∑
+G∈G
+P(G)−1
+]
+−
+M∑
+i=1
+θi
+)∑
+G∈G
+P(G)Xi (G)−⟨ Xi⟩
+]
+;
+upon optimizing it, one ﬁnds
+∂L
+∂P(G) = 0 =⇒ P(G) = e−1−ψ−
+∑
+i θi Xi (G).
+This is known as theExponential Random Graphs formalism.
+27
+
+===== Page 348 =====
+Mathematical intermezzo
+Back to Laplace.The ‘principle of insuﬃcient reason’ reads
+L = S− θ0
+)∑
+G
+P(G)−1
+]
+;
+hence
+max
+P(G)
+L =⇒ ln P(G) =−1− θ0 =⇒ P(G) = e−1−θ0
+considering that
+∑
+G
+P(G) =
+∑
+G
+e−1−θ0 =⇒ 1 = e−1−θ0|G| =⇒ P(G) = 1
+|G|
+28
+
+===== Page 349 =====
+Mathematical intermezzo
+29
+
+===== Page 350 =====
+More in general...
+The ‘principle of maximum entropy’ induces the so-called
+Exponential Random Graphs formalism.
+max
+P(G)
+L =⇒ P(G) = e−H(G)
+Z (θ) = e−
+∑M
+i=1 θi Ci (G)
+∑
+G e−
+∑M
+i=1 θi Ci (G)
+The probability distribution just depends on the suﬃcient statistics (i.e.
+the constraints).
+30
+
+===== Page 351 =====
+Choosing the constraints
+{ }=
+{ }=
+{ }=
+{ }=
+{ }=
+31
+
+===== Page 352 =====
+Choosing the constraints
+{ }=
+{ }=
+{ }=
+{ }=
+{ }=
+32
+
+===== Page 353 =====
+Choosing the constraints
+{ }=
+{ }=
+{ }=
+{ }=
+{ }=
+33
+
+===== Page 354 =====
+Choosing the constraints
+34
+
+===== Page 355 =====
+Back to the Erdös-Rényi model
+The Hamiltonian H(A) = θL induces the probability
+P(A) = e−θL(A)
+∑
+A e−θL(A)
+= e
+−θ
+∑
+i<j aij
+∑
+A e
+−θ
+∑
+i<j aij
+=
+∏
+i<j e−θaij
+∑
+A
+∏
+i<j e−θaij
+=
+∏
+i<j e−θaij
+∏
+i<j
+∑
+aij =0,1 e−θaij
+=
+∏
+i<j e−θaij
+∏
+i<j 1 + e−θ
+35
+
+===== Page 356 =====
+Back to the Erdös-Rényi model
+=
+∏
+i<j
+e−θaij
+1 + e−θ
+=
+∏
+i<j
+e−θaij
+[1 + e−θ]1+aij−aij
+=
+∏
+i<j
+( e−θ
+1 + e−θ
+)aij ( 1
+1 + e−θ
+)1−aij
+=
+∏
+i<j
+( x
+1 + x
+)aij ( 1
+1 + x
+)1−aij
+=
+∏
+i<j
+paij (1− p)1−aij ;
+this is the Erdös-Rényi model.
+36
+
+===== Page 357 =====
+Chung-Lu 2.0: the Conﬁguration Model
+P(A) = e−
+∑
+i αi ki (A)
+∑
+A e−
+∑
+i αi ki (A)
+=
+∏
+i<j
+e−(αi +αj )aij
+∑
+aij =0,1 e−(αi +αj )aij
+=
+∏
+i<j
+e−(αi +αj )aij
+1 + e−(αi +αj )
+=
+∏
+i<j
+e−(αi +αj )aij
+[1 + e−(αi +αj )]1+aij−aij
+=
+∏
+i<j
+( e−(αi +αj )
+1 + e−(αi +αj )
+)aij ( 1
+1 + e−(αi +αj )
+)1−aij
+=
+∏
+i<j
+( xi xj
+1 + xi xj
+)aij ( 1
+1 + xi xj
+)1−aij
+=
+∏
+i<j
+paij
+ij (1− pij )1−aij
+37
+
+===== Page 358 =====
+The Conﬁguration Model
+What is a ‘conﬁguration’?
+It is the degree sequence of a network, i.e.{ki}N
+i=1.
+38
+
+===== Page 359 =====
+Mathematical intermezzo
+Back to Chung-Lu.When is the Chung-Lu model valid?
+pij = xi xj
+1 + xi xj
+≃ xi xj
+is valid when the network is sparse. In fact
+⟨ki⟩ =
+∑
+j
+xi xj = ki
+and
+xi = ki∑
+j xj
+=⇒
+∑
+i
+xi =
+∑
+i ki∑
+j xj
+=⇒ 2L =
+(∑
+i
+xi
+(2
+inducing the usual conditionxi = ki√
+2L.
+39
+
+===== Page 360 =====
+In words...
+40
+
+===== Page 361 =====
+STATISTICAL MECHANICS OF NETWORKS - II
+41
+
+===== Page 362 =====
+Dealing with the parameters
+P(G) depends on parameters. One can decide
+• to study the model and draw the parameters according to some
+distribution;
+• employ the model to study real-world networks.
+In this second case, one deals withP(G∗).
+42
+
+===== Page 363 =====
+Dealing with the parameters
+2)  Constraints 
+{ } , , … 
+1)  Original graph 
+3)  Constrained ensemble of networks 
+43
+
+===== Page 364 =====
+Dealing with the parameters
+P(G∗) depends on parameters. To estimate them one invokes the
+Likelihood maximization principle.
+max
+θ
+{ln P(G∗)} =⇒⟨ C⟩ = C∗
+It prescribes to maximize the probability of observing the given
+conﬁguration G∗.
+It is a point-like estimation, i.e. it returns a single value of each
+parameter.
+44
+
+===== Page 365 =====
+Erdös-Rényi model: parameters estimation
+The likelihood reads
+L =
+∑
+i<j
+[aij ln x− ln(1 + x )]
+= L ln x−
+(N
+2
+)
+ln(1 + x )
+and its optimization leads to
+∂L
+∂x = L∗
+x −
+(N
+2
+) ( 1
+1 + x
+)
+= 0
+=⇒ L∗ =
+(N
+2
+) ( x
+1 + x
+)
+=
+(N
+2
+)
+p
+=⇒ p = 2L∗
+N(N−1)
+45
+
+===== Page 366 =====
+Conﬁguration Model: parameters estimation
+The likelihood reads
+L =
+∑
+i<j
+[aij ln(xi xj )− ln(1 + xi xj )]
+=
+∑
+i
+k∗
+i ln(xi )−
+∑
+i<j
+ln(1 + xi xj )
+and its optimization leads to
+∂L
+∂xi
+= k∗
+i
+xi
+−
+∑
+j
+xj
+1 + xi xj
+= 0
+=⇒ k∗
+i =
+N∑
+j(̸=i)=1
+xi xj
+1 + xi xj
+46
+
+===== Page 367 =====
+‘The’ method
+47
+
+===== Page 368 =====
+Questions
+Several null models have been implemented in the NEMTROPY package,
+available at the URL
+https://pypi.org/project/NEMtropy/
+Take a look at it and answer the following questions.
+48
+
+===== Page 369 =====
+Questions
+• how would you sample the Chung-Lu ensemble? Start from a real
+network and sample the CL ensemble induced by it;
+• what is the ensemble average ofaij, ki, k nn
+i , ci?
+• what is the ensemble distribution ofki and kj with i̸= j? Was this
+an expected result?
+• how would you sample the Conﬁguration Model ensemble? Start
+from a real network and sample the CM ensemble induced by it;
+• what is the ensemble average ofaij, ki, k nn
+i , ci?
+• what is the ensemble distribution ofki and kj with i̸= j? Was this
+an expected result?
+49
+
+===== Page 370 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+8B. Statistical mechanics of networks: applications
+Tiziano Squartini
+03 July 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 371 =====
+‘The’ method
+2
+
+===== Page 372 =====
+‘The’ method
+The Erdös-Rényi model is deﬁned by
+p = 2L∗
+N(N−1).
+The Conﬁguration Model is deﬁned by
+pij = xi xj
+1 + xi xj
+where k∗
+i = ∑N
+j(̸=i)=1
+xi xj
+1+xi xj
+=⟨ki⟩.
+We must use those probabilities to understand if a given network is
+compatible with a given model or not.
+3
+
+===== Page 373 =====
+Computing expectations
+Are the imposed constraints enough to reproduce the observed network?
+Once we have determined the probability distributionP(A), we must
+determine⟨Xi⟩ and σXi.
+We can proceed either analytically or numerically.
+4
+
+===== Page 374 =====
+Computing expectations
+Let us calculate the expected value of
+k nn
+i =
+∑
+j aij kj
+ki
+=
+∑
+j
+∑
+k aij ajk
+∑
+j aij
+;
+it reads
+⟨k nn
+i ⟩ER≃
+∑
+j
+∑
+k p2
+∑
+j p ≃ N 2p2
+Np = Np
+⟨k nn
+i ⟩CM≃
+∑
+j⟨aij⟩⟨kj⟩
+⟨ki⟩ =
+∑
+j pij⟨kj⟩
+⟨ki⟩ =
+∑
+j pij kj
+ki
+i.e. diﬀerent for each node.
+5
+
+===== Page 375 =====
+Computing expectations
+Analogously,
+ci =
+∑
+j
+∑
+k aij ajk aki
+ki (ki−1) =
+∑
+j
+∑
+k aij ajk aki
+∑
+j
+∑
+k aij aik
+has the following expected values
+⟨ci⟩ER≃
+∑
+j
+∑
+k p3
+∑
+j
+∑
+k p2 = N 2p3
+N 2p2 = p
+⟨ci⟩CM≃
+∑
+j
+∑
+k⟨aij⟩⟨ajk⟩⟨aki⟩
+⟨ki (ki−1)⟩ =
+∑
+j
+∑
+k pij pjk pki
+∑
+j
+∑
+k pij pik
+i.e. diﬀerent for each node.
+6
+
+===== Page 376 =====
+WTW representations
+7
+
+===== Page 377 =====
+WTW representations
+8
+
+===== Page 378 =====
+WTW representations
+9
+
+===== Page 379 =====
+WTW representations
+10
+
+===== Page 380 =====
+Does the CM explain real-world systems?
+11
+
+===== Page 381 =====
+Does the CM explain real-world systems?
+12
+
+===== Page 382 =====
+Does the CM explain real-world systems?
+13
+
+===== Page 383 =====
+Does the CM explain real-world systems?
+14
+
+===== Page 384 =====
+Does the CM explain real-world systems?
+15
+
+===== Page 385 =====
+Directed Conﬁguration Model
+16
+
+===== Page 386 =====
+Directed Conﬁguration Model: parameters estimation
+The likelihood reads
+L =
+∑
+i̸=j
+[aij ln(xi yj )− ln(1 + xi yj )]
+and its optimization leads to solve the system
+k out
+i (A∗) =
+N∑
+j(̸=i)=1
+xi yj
+1 + xi yj
+=
+N∑
+j(̸=i)=1
+pij
+k in
+i (A∗) =
+N∑
+j(̸=i)=1
+xj yi
+1 + xj yi
+=
+N∑
+j(̸=i)=1
+pji
+of 2N, non-linear, coupled equations.
+17
+
+===== Page 387 =====
+Does the DCM explain real-world systems?
+18
+
+===== Page 388 =====
+Does the DCM explain real-world systems?
+19
+
+===== Page 389 =====
+Does the DCM explain real-world systems?
+20
+
+===== Page 390 =====
+Does the DCM explain real-world systems?
+The quantity
+ρ = r−⟨ r⟩
+1−⟨ r⟩
+normalizes reciprocity and provides the ﬁrst deﬁnition ofnull model.
+Let us repeat the analysis considering a diﬀerent quantity, i.e. thez-score
+z[X ] = X−⟨ X⟩
+σ[X ]
+which has a precise statistical meaning.
+21
+
+===== Page 391 =====
+Does the DCM explain real-world systems?
+Let us repeat the analysis considering a diﬀerent quantity, i.e. thez-score
+z[Xi ] = Xi−⟨ Xi⟩
+σXi
+which has a precise statistical meaning.
+The quantity r is diﬃcult to handle. Let us consider
+X = L↔ =
+∑
+i̸=j
+aij aji
+i.e. just the number of reciprocal links.
+How do we calculate⟨L↔⟩ and σ[L↔]?
+22
+
+===== Page 392 =====
+Does the DCM explain real-world systems?
+We have
+X = L↔ =
+∑
+i̸=j
+aij aji =
+∑
+i<j
+2aij aji ;
+hence
+⟨X⟩ =⟨L↔⟩ =
+∑
+i̸=j
+⟨aij aji⟩ =
+∑
+i<j
+2⟨aij⟩⟨aji⟩
+and
+⟨X⟩DER =
+∑
+i<j
+2p2 = p2N(N−1),
+⟨X⟩DCM =
+∑
+i<j
+2pij pji.
+23
+
+===== Page 393 =====
+Does the DCM explain real-world systems?
+We have
+X = L↔ =
+∑
+i̸=j
+aij aji =
+∑
+i<j
+2aij aji ;
+hence
+σ[X ] = σ[L↔] =
+∑
+i<j
+σ[2aij aji ]
+and
+σ[X ]DER =
+∑
+i<j
+4p2(1− p2) = 2p2(1− p2)N(N−1),
+σ[X ]DCM =
+∑
+i<j
+4pij pji (1− pij pji ).
+24
+
+===== Page 394 =====
+Does the DCM explain real-world systems?
+25
+
+===== Page 395 =====
+Does the DCM explain real-world systems?
+Even if a null model is not capable of explaining trends, it can provide a
+benchmark for revealing early-warning signals.
+Early-warning signals are trends that link two diﬀerent regimes of a
+system.
+26
+
+===== Page 396 =====
+Does the DCM explain real-world systems?
+27
+
+===== Page 397 =====
+Analytical VS numerical calculations
+Proceed by numerically sample the ensemble:
+• consider each pair of nodes;
+• connect them according to the probability coeﬃcientpij;
+• repeat the steps above ‘many’ times;
+• calculate⟨X⟩, σX, etc. on the numerically-generated ensemble.
+28
+
+===== Page 398 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+9. Network reconstruction
+Tiziano Squartini
+03 July 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 399 =====
+The World Trade Web
+Deﬁne w as w = GDP
+GDP.
+P>(w ) is quite stable over 50 years of WTW!
+2
+
+===== Page 400 =====
+The ﬁtness model and the WTW
+Use the GDP as a ﬁtness for countries, here
+f (xi , xj ) = f (wi , wj ) = zwi wj
+1 + zwi wj
+;
+we have one parameter,z. How can we estimate it?
+The ﬁtness model provides an indication, i.e.
+L =
+∑
+i<j
+zwi wj
+1 + zwi wj
+which is equivalent to likelihood maximization.
+3
+
+===== Page 401 =====
+Computing expectations
+The expected values of the quantities of interest under the ﬁtness model
+read
+⟨ki⟩FM =
+∑
+j(̸=i)
+f (wi , wj ),
+⟨k nn
+i ⟩FM≃
+∑
+j(̸=i)⟨aij⟩⟨kj⟩
+⟨ki⟩ =
+∑
+j(̸=i) f (wi , wj )⟨kj⟩FM
+⟨ki⟩FM
+⟨ci⟩FM≃
+∑
+j(̸=i)
+∑
+k(̸=i,j)⟨aij⟩⟨ajk⟩⟨aki⟩
+⟨ki (ki−1)⟩
+=
+∑
+j(̸=i)
+∑
+k(̸=i,j) f (wi , wj )f (wj , wk )f (wk , wi )
+∑
+j(̸=i)
+∑
+k(̸=i,j) f (wi , wj )f (wi , wk )
+as you see, they are formally analogue to the expressions holding for the
+CM, but withf (wi , wj ) replacing pij.
+4
+
+===== Page 402 =====
+The ﬁtness model and the WTW
+5
+
+===== Page 403 =====
+The ﬁtness model and the WTW
+6
+
+===== Page 404 =====
+The ﬁtness model and the WTW
+7
+
+===== Page 405 =====
+The ﬁtness model and the WTW
+8
+
+===== Page 406 =====
+A QUICK LOOK AT FINANCIAL NETWORKS
+9
+
+===== Page 407 =====
+Why is reconstruction important?
+For example, how to evaluate the eﬀects of shocks if the connections are
+unknown?
+10
+
+===== Page 408 =====
+Setting up the problem
+W=
+
+
+0 0 0 w1j . . . w1N
+... ... ... ... ... ...
+0 wi2 wi3 wij . . . 0
+... ... ... ... ... ...
+wN1 0 wN3 0 . . . 0
+
+
+a1
+...
+ai
+...
+aN
+l1 l2 l3 l4 . . . lN
+The network to be reconstructed is a weighted, directed matrix.
+Partial information: represented bymarginals (e.g. assets and liabilities).
+11
+
+===== Page 409 =====
+The ﬁtness model...again
+Shannon entropy reads
+S =−
+∑
+G
+P(G) ln P(G);
+if we knew the degree sequence we could use the prescription
+pij = xi yj
+1 + xi yj
+and solve the system of equations...
+k out
+i =
+∑
+j(̸=i)
+pij , k in
+i =
+∑
+j(̸=i)
+pji
+...but we don’t: we only know the weighted marginals!
+12
+
+===== Page 410 =====
+The ﬁtness model...again
+Let us suppose that the number of connections of each node is
+proportional to its ﬁtness:
+xi = ai·√z,
+yj = lj·√z;
+thus,
+pij = xi yj
+1 + xi yj
+= z a i lj
+1 + z a i lj
+and we can tunez to reproduce L
+L =
+∑
+i̸=j
+z a i lj
+1 + z a i lj
+.
+13
+
+===== Page 411 =====
+Testing our hypothesis: e-MID
+14
+
+===== Page 412 =====
+Reproducing topology: e-MID
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+1 50 100 150 179
+1
+50
+100
+150
+179
+Snapshot of e-MID in 2003: topology is satisfactorily reproduced.
+15
+
+===== Page 413 =====
+The density-corrected Gravity Model
+To account for weights, we can think of the following recipe
+• the weight is 0 with probability
+1− pij ;
+• the weight is ai lj
+Wpij
+with probability
+pij .
+The recipe above ensures that
+⟨wij⟩ = 0· (1− pij ) + ai lj
+Wpij
+· pij = ai lj
+W
+and is known asdensity-corrected Gravity Model.
+16
+
+===== Page 414 =====
+The density-corrected Gravity Model
+17
+
+===== Page 415 =====
+The density-corrected Gravity Model
+18
+
+===== Page 416 =====
+The bipartite density-corrected Gravity Model
+19
+
+===== Page 417 =====
+The bipartite density-corrected Gravity Model
+Link are placed there with probability
+piα = zVi Cα
+1 + zVi Cα
+where z is determined by imposing that
+⟨L⟩ = L.
+Naturally,
+⟨ki⟩ =
+∑
+α
+piα =
+∑
+α
+zVi Cα
+1 + zVi Cα
+and
+⟨dα⟩ =
+∑
+i
+piα = zVi Cα
+1 + zVi Cα
+.
+20
+
+===== Page 418 =====
+The bipartite density-corrected Gravity Model
+21
+
+===== Page 419 =====
+Data Science and Statistical Learning
+- 2nd Level Master Course -
+Network Analysis
+10. Network properties: mesoscale structures
+Tiziano Squartini
+03 July 2025
+IMT School for Advanced Studies Lucca 1
+
+===== Page 420 =====
+Deﬁnitions
+A BUN isdisconnected if and only if the adjacency matrix is block-wise:
+A =
+(
+A11 012
+021 A22
+(
+.
+A BDN isreducible if and only if the adjacency matrix can be written as:
+A =
+(
+A11 A12
+021 A22
+(
+.
+A matrix isirreducible (i.e. cannot be written as above) if and only if the
+BDN is strongly connected.
+Equivalently, it is irreducible if∀i,j, a natural numbern exists such that
+An
+ij > 0. Such number is pair-dependent.
+2
+
+===== Page 421 =====
+Connected components: perturbations...
+This is a simple example of modular network.
+3
+
+===== Page 422 =====
+Connected components: perturbations...
+This is a simple example of modular network.
+4
+
+===== Page 423 =====
+MESOSCALE STRUCTURES:
+COMMUNITIES
+5
+
+===== Page 424 =====
+An example
+Communities aredensely-connected groups of nodes...
+...that are loosely-connected with the rest of the network.
+6
+
+===== Page 425 =====
+Back to centrality
+The idea is that links between communities are ‘more central’...but with
+respect to what?
+• shortest-path betweenness: it is the number of shortest paths
+between pairs of vertices that run along it:
+be =
+∑
+s̸=t
+σe
+st
+σst
+• random-walk betweenness: it is the number of times a random
+walker passes through it;
+• current-ﬂow betweenness: it is the absolute value of the current
+through it.
+7
+
+===== Page 426 =====
+Early community detection
+Girvan-Newman algorithm works as follows:
+• calculate the betweenness for all edges in the network;
+• remove the edge with the highest betweenness;
+• recalculate the betweenness for all edges aﬀected by the removal;
+• repeat from step 2 until no edge remains.
+8
+
+===== Page 427 =====
+Early community detection
+How to evaluate the goodness of a partition?
+By maximizing themodularity, deﬁned as
+Q =
+∑
+i
+(eii−k 2
+ci ).
+9
+
+===== Page 428 =====
+Early community detection
+10
+
+===== Page 429 =====
+Early community detection
+11
+
+===== Page 430 =====
+Introducing modularity
+Consider a partition of a network intoC communities.
+Let us deﬁne aC×C symmetric matrixe where
+eij = percentage of links betweenci and cj ;
+then,
+kci =
+∑
+j
+eij
+is the ‘degree’ of communityi.
+In arandom network we would haveeij = kcikcj.
+12
+
+===== Page 431 =====
+Hypothesis testing on networks
+The idea is that trends, by themselves, are quite useless.
+We need to compare a trend with a reference benchmark, also callednull
+model.
+Hence, the question becomes: how signiﬁcant is the observed trend with
+respect to the chosen null model?
+In statistics this is known ashypothesis testing.
+13
+
+===== Page 432 =====
+Hypothesis testing on networks
+14
+
+===== Page 433 =====
+Modularity-based community detection
+Q = 1
+2L
+∑
+i̸=j
+(aij−pij )δci ,cj = 1
+2L
+∑
+i̸=j
+(
+aij− kikj
+2L
+)
+δci ,cj ;
+Hypothesis testing is fundamental: modularity employs a null model to
+detect signiﬁcant partitions.
+15
+
+===== Page 434 =====
+Modularity-based community detection
+The idea is: explore all partitions, calculating the modularity of each.
+Then, choose the one for whichQ is maximum.
+16
+
+===== Page 435 =====
+Modularity-based community detection
+Q = 1
+2W
+∑
+i̸=j
+(wij−⟨wij⟩)δci ,cj = 1
+2W
+∑
+i̸=j
+(
+wij− sisj
+2W
+)
+δci ,cj ;
+Hypothesis testing is fundamental: modularity employs a null model to
+detect signiﬁcant partitions.
+17
+
+===== Page 436 =====
+Counting all partitions...?
+The Stirling number of the second kindcounts the number of ways to
+partition N objects intoC non-empty subsets:
+S(N,C ) =
+{N
+C
+}
+= 1
+C !
+C∑
+i=0
+(−1)i
+(C
+i
+)
+(C−i)N.
+The total number of partitions is given by theNth Bell number:
+BN =
+N∑
+C =1
+S(N,C ).
+18
+
+===== Page 437 =====
+Counting all partitions...?
+This is a graphical visualization of the existing partitions for a given pair
+(N,k).
+19
+
+===== Page 438 =====
+Counting all partitions...?
+Number of existing partitions for a given pair(N,k).
+20
+
+===== Page 439 =====
+Implementing modularity maximization
+Since exploring all possible partitions is unfeasible, one can proceed via a
+greedy optimizationalgorithm:
+• assume each node is a community on its own;
+• at each step, merge a pair of communities (choose the merging
+maximally increasingQ or S);
+• repeat until all nodes are in the same community (i.e. afterN steps);
+• among theN generated partitions choose the one with maximumQ
+or S.
+21
+
+===== Page 440 =====
+Implementing modularity maximization
+22
+
+===== Page 441 =====
+The limitations of modularity
+• the null modelpij = ki kj
+2L is valid when the network is sparse;
+• the modularity suﬀers from resolution problems:
+• the modularity does not implement a proper test of hypothesis.
+23
+
+===== Page 442 =====
+The limitations of modularity
+Q = 1
+2L
+∑
+i̸=j
+(aij−p)δci ,cj =
+= 1
+2L
+∑
+i̸=j
+aijδci ,cj− 1
+2L
+∑
+i̸=j
+pδci ,cj =
+= 1
+2L
+∑
+c
+[2Lc−pNc (Nc−1)] =
+= 1
+2L
+∑
+c
+[
+2Lc−2LNc (Nc−1)
+N(N−1)
+]
+=
+(L•
+L − V•
+V
+)
+;
+hence,
+Q > 0 =⇒ p• = L•
+V•
+> L
+V = p.
+24
+
+===== Page 443 =====
+Hypothesis testing on networks
+25
+
+===== Page 444 =====
+Hypothesis testing on networks
+26
+
+===== Page 445 =====
+Beyond modularity: the hypergeometric distribution
+It is a quite unusual distribution but very useful when coming to cluster
+objects...
+27
+
+===== Page 446 =====
+Beyond modularity: the hypergeometric distribution
+Let us consider the hypergeometric distribution:
+Pr(X = i) =
+(r
+i
+)(n−r
+m−i
+)
+(n
+m
+)
+where
+• n: population size (# balls);
+• r: number of ‘success states’ in the population (# red balls);
+• m: number of draws;
+• i: number of observed successes (# of drawn red balls).
+28
+
+===== Page 447 =====
+Beyond modularity: the hypergeometric distribution
+Let us consider the hypergeometric distribution:
+Pr(L• = i) =
+(V•
+i
+)(V−V•
+L−i
+)
+(V
+L
+)
+where
+• V is thetotal number of nodes pairs;
+• V• is thenumber of nodes pairs within communities;
+• L is the number of draws;
+• i is the number of observed successes, i.e.links within communities.
+29
+
+===== Page 448 =====
+Modularity vs surprise
+30
+
+===== Page 449 =====
+Modularity vs surprise
+On each network taken as a testbench, surprise has a narrower plateau.
+Tests of this kind are possible only on very small networks.
+31
+
+===== Page 450 =====
+Modularity vs surprise
+32
+
+===== Page 451 =====
+MESOSCALE STRUCTURES:
+K-SHELLS
+33
+
+===== Page 452 =====
+K-shells
+k-core: maximal subgraph in which all vertices have degree at leastk.
+From k-core tok-shells andcoreness.
+34
+
+===== Page 453 =====
+K-shells: pruning process
+35
+
+===== Page 454 =====
+K-shells: pruning process
+36
+
+===== Page 455 =====
+K-shells: pruning process
+37
+
+===== Page 456 =====
+K-shells: pruning process
+38
+
+===== Page 457 =====
+Mesoscale structures detection via k-shells
+39
+
+===== Page 458 =====
+MESOSCALE STRUCTURES:
+CORE-PERIPHERY STRUCTURE
+40
+
+===== Page 459 =====
+Core-periphery structures
+The ﬁrst ones to address the problem quantitatively were Borgatti &
+Everett.
+A typical example of networks of this kind is represented by ﬁnancial
+networks.
+41
+
+===== Page 460 =====
+Core-periphery structures
+Borgatti & Everett deﬁned an ideal core-periphery structure as follows.
+In blockmodeling terms, the core/core region is a 1-block, the
+core/periphery regions are imperfect 1-blocks and the periphery/periphery
+region is a 0-block. We claim that this pattern is characteristic of
+core/periphery structures and is in fact a deﬁning property.
+Their strategy is that of ﬁndingdeviations from this ideal picture.
+Hopefully, deviations are evaluated via statistical tests.
+42
+
+===== Page 461 =====
+Core-periphery structures
+43
+
+===== Page 462 =====
+Bimodular structures
+44
+
+===== Page 463 =====
+The hypergeometric distribution...again
+Let us consider the hypergeometric distribution:
+Pr(L• = i,L◦ = j) =
+(V•
+i
+)(V◦
+j
+)(V−(V•+V◦)
+L−(i+j)
+)
+(V
+L
+)
+where
+• V is thetotal number of nodes pairs;
+• V• is thenumber of nodes pairs within the ﬁrst module;
+• L is the number of draws;
+• i is the number linkswithin the ﬁrst module;
+• ...
+45
+
+===== Page 464 =====
+MESOSCALE STRUCTURES:
+BOW-TIE STRUCTURE
+46
+
+===== Page 465 =====
+Bow-tie structure
+47
+
+===== Page 466 =====
+Bow-tie structure
+The deﬁnition of bow-tie structure is based on the concept ofnode
+reachability.
+Node i is reachable from nodej if a path exists from nodei to nodej (a
+path being deﬁned as a sequence of adjacent links connectingi with j).
+According to this deﬁnition, each node is assigned to one of three sets:
+• SCC: each node in the Strongly Connected Component (SCC) is
+reachable from any other node belonging to the SCC;
+• IN: each node in the SCC is reachable from any node belonging to
+the IN-component;
+• OUT: each node in OUT-component is reachable from any node
+belonging to the SCC.
+48
+
+===== Page 467 =====
+Bow-tie structure
+49
+
+===== Page 468 =====
+Bow-tie structure
+50
+
+===== Page 469 =====
+MESOSCALE STRUCTURES:
+NESTEDNESS
+51
+
+===== Page 470 =====
+Nestedness
+52
+
+===== Page 471 =====
+COMBINING MESOSCALE STRUCTURES
+53
+
+===== Page 472 =====
+Combining mesoscale structures
+Mesoscale structures can be combined: one can have communities inside
+communities.
+54
+
+===== Page 473 =====
+Combining mesoscale structures
+Mesoscale structures can be combined: one can have communities of
+core-periphery structures.
+55
+
+===== Page 474 =====
+Combining mesoscale structures: the SBM
+To account for mesoscale structures we need something encodingblocks.
+The easiest way is that of expanding the Gilbert model in a block-wise
+fashion, i.e. considering
+P≡
+(
+P1 Q
+Q P 2
+(
+where p(1)
+ij quantiﬁes the connectivity of nodes within block 1,p(2)
+ij
+quantiﬁes the connectivity of nodes within block 2 andqij quantiﬁes the
+connectivity between nodes belonging to diﬀerent blocks.
+56
+
+===== Page 475 =====
+Combining mesoscale structures: the SBM
+P≡
+(
+P1 Q
+Q P 2
+(
+If p(1)
+ij ≥ p(2)
+ij > qij (or p(2)
+ij ≥ p(1)
+ij > qij, then we have a community
+structure.
+If p(1)
+ij > qij > p(2)
+ij , then we have a core-periphery structure.
+If p(1)
+ij < qij > p(2)
+ij , then we have a bipartite structure.
+57
+
+===== Page 476 =====
+Combining mesoscale structures: the SBM
+P≡
+(
+P1 Q
+Q P 2
+(
+The class of models represented by the matrix above is known as
+stochastic block model.
+By deﬁning an appropriate number of blocks, you can model (almost)
+everything.
+The SBM is compatible with Shannon entropy maximization by
+constraining the number of links within and between blocks.
+58
+
+===== Page 477 =====
+Questions
+The surprise-based algorithms can be found at the URL
+https://github.com/EmilianoMarchese/SurpriseMeMore;
+the algorithm to ﬁnd bow-tie structures can be found in the paper
+https://arxiv.org/pdf/1805.06005.pdf
+Consider a bunch of real networks at your choice and answer the
+following questions.
+59
+
+===== Page 478 =====
+Questions
+• run the Louvain algorithm to ﬁnd communities;
+• run the surprise-based algorithm to ﬁnd communities;
+• run the k-shell decomposition to ﬁnd shells and cores;
+• run the surprise-based algorithm to ﬁnd a core-periphery structure;
+• run the algorithm cited in the paper above to ﬁnd bow-tie structures;
+• simulate a mesoscale structure with the SBM and run the
+appropriate algorithm to retrieve it.
+60
+

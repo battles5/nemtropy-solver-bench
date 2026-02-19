@@ -1,0 +1,9 @@
+{
+  "script": "analysis.py",
+  "seed": 42,
+  "n_ensemble": 1000,
+  "python_version": "3.13.12",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy_version": "1.26.4",
+  "networkx_version": "3.6.1"
+}

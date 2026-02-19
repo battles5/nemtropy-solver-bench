@@ -1,0 +1,19 @@
+{
+  "python_version": "3.13.12",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy_version": "1.26.4",
+  "networkx_version": "3.6.1",
+  "nemtropy_version": "3.0.3",
+  "seed": 42,
+  "runs": 5,
+  "sizes": [
+    50,
+    100,
+    200,
+    500,
+    1000,
+    2000
+  ],
+  "p": 0.05,
+  "max_steps": 500
+}

@@ -74,10 +74,10 @@ Different solvers offer different trade-offs between speed, memory and convergen
 
 ### Key findings
 
-- All solvers achieve errors of order $10^{-8}$–$10^{-10}$, confirming the results of Vallarano *et al.* (2021).
+- Most solver–size combinations achieve errors of order $10^{-8}$–$10^{-10}$, consistent with Vallarano *et al.* (2021). However, **`fixed-point` fails to converge on UBCM at n = 50** (error ≈ 0.75) and **`newton` degrades to $10^{-7}$ on DBCM at n = 2 000**, showing that accuracy is not guaranteed across all regimes.
 - **`newton`** scales poorly on DBCM because the full Hessian grows as $O(n^2)$: at n = 2 000 it is **~32× slower** than `fixed-point`.
-- **`fixed-point`** is the fastest and most stable solver across all sizes, with the lowest variance.
-- The solver choice is a **speed vs. robustness** trade-off, not a speed vs. accuracy one.
+- **`fixed-point`** is the fastest solver across all sizes, with the lowest variance — but it can fail on very small networks.
+- The solver choice involves **both a speed and an accuracy trade-off**: `quasinewton` offers the best balance of speed and reliability.
 
 ---
 
@@ -133,9 +133,10 @@ For each real-world network:
 |---|---|---|---|---|---|
 | reciprocity | 8 865 | 1 618 | 38.2 | **+189.72** | **Yes** |
 | reciprocity (analytical) | 8 865 | 1 617 | 38.1 | **+190.17** | **Yes** |
-| avg_clustering | 0.399 | 0.076 | 0.009 | **+35.14** | **Yes** |
-| transitivity | 0.221 | 0.032 | 0.006 | **+33.48** | **Yes** |
-| assortativity | −0.011 | −0.045 | 0.002 | **+21.93** | **Yes** |
+| avg_clustering | 0.407 | 0.237 | 0.005 | **+35.14** | **Yes** |
+| transitivity | 0.267 | 0.206 | 0.002 | **+33.48** | **Yes** |
+| n_triangles | 105 461 | 169 876 | 3 040 | **−21.19** | **Yes** |
+| assortativity | −0.026 | −0.119 | 0.004 | **+21.93** | **Yes** |
 | density | 0.026 | 0.026 | 0.000 | −0.39 | No |
 
 ### Interpretation
@@ -180,7 +181,7 @@ For each real-world network:
 
 ```bash
 # Create virtualenv
-python3.11 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate            # Linux / macOS
 # .\.venv\Scripts\Activate.ps1       # Windows PowerShell
 
@@ -257,11 +258,15 @@ results/
 ├── src/
 │   ├── experiment.py              # Solver benchmark
 │   └── analysis.py                # Null-model analysis (z-scores)
+├── slides/
+│   ├── presentation.tex           # Beamer slides (Metropolis)
+│   └── presentation.pdf           # Compiled PDF
+├── materiale_corso/               # Course material (text extracts)
 ├── data/                          # Reserved for future datasets
-└── results/                       # Generated (gitignored)
-    ├── figures/
-    ├── tables/
-    └── samples/
+└── results/
+    ├── figures/                   # Tracked in git
+    ├── tables/                    # Tracked in git
+    └── samples/                   # Gitignored (large)
 ```
 
 ## References
