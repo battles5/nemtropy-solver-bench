@@ -1,6 +1,6 @@
-# ERGM / Maximum-Entropy: Solver Benchmark & Null-Model Analysis
+# Does the degree sequence explain the structural properties of real networks?
 
-Reproducible benchmark of numerical solvers for **Exponential Random Graph Models** (ERGM), plus an applied null-model analysis with z-scores.  
+Reproducible benchmark of numerical solvers for **Exponential Random Graph Models** (ERGM), plus z-score null-model analysis on **3 real networks** (UBCM + DBCM), including analytical expectations and reciprocity z-scores.  
 Developed for the **Complex Network Analysis** course — [2nd Level Master in Data Science and Statistical Learning (MD2SL)](https://md2sl-eng.imtlucca.it/), IMT School for Advanced Studies Lucca & University of Florence.
 
 ---
@@ -83,51 +83,68 @@ Different solvers offer different trade-offs between speed, memory and convergen
 
 ## Part 2 — Null-Model Analysis with Z-Scores (`src/analysis.py`)
 
-Beyond benchmarking solver speed, the second script demonstrates the *application* of the UBCM as a statistical null model, following the methodology of Squartini & Garlaschelli (2011).
+Beyond benchmarking solver speed, the second script demonstrates the *application* of the CM (UBCM + DBCM) as a statistical null model, following the methodology of Squartini & Garlaschelli (2011).
+
+### Networks
+
+| Network | Type | n | m | Model | Source |
+|---|---|---|---|---|---|
+| Zachary Karate Club | undirected | 34 | 78 | UBCM | NetworkX built-in |
+| Les Misérables | undirected | 77 | 254 | UBCM | NetworkX built-in |
+| email-Eu-core | **directed** | 986 | 24 929 | **DBCM** | [SNAP](https://snap.stanford.edu/data/email-Eu-core.html) |
 
 ### Methodology
 
 For each real-world network:
 
-1. **Fit UBCM** → obtain parameters $\{x_i\}$.
-2. **Reconstruct probability matrix** → $p_{ij} = x_i x_j / (1 + x_i x_j)$.
-3. **Sample an ensemble** of 500 random graphs from the UBCM via independent Bernoulli trials.
-4. **Compute observed network properties**:
-   - **ANND** (Average Nearest-Neighbour Degree): $k_{nn,i} = \frac{1}{k_i}\sum_j a_{ij} k_j$
-   - **Local clustering coefficient**: $c_i = \frac{2 t_i}{k_i(k_i - 1)}$ where $t_i$ = triangles at node $i$
-   - **Transitivity** (global clustering): $\frac{3 \times \text{triangles}}{\text{connected triples}}$
-   - **Degree assortativity**: Pearson correlation of degrees at edge endpoints
-5. **Z-scores**: $z_X = \frac{X^{\text{obs}} - \langle X \rangle_{\text{UBCM}}}{\sigma_X^{\text{UBCM}}}$
-   - $|z| > 2$: the property is **statistically significant** — not explained by the degree sequence alone.
+1. **Fit CM**: UBCM for undirected, DBCM for directed → parameters $\{x_i\}$ or $\{x_i, y_i\}$.
+2. **Reconstruct probability matrix**: $p_{ij} = \frac{x_i x_j}{1 + x_i x_j}$ (UBCM) or $p_{ij} = \frac{x_i y_j}{1 + x_i y_j}$ (DBCM).
+3. **Sample an ensemble** of **1 000** random graphs via independent Bernoulli trials.
+4. **Compute properties** on each sampled graph (ANND, clustering, transitivity, triangles, assortativity, reciprocity for directed).
+5. **Analytical expectations** (UBCM): $\langle k_{nn,i}\rangle = \frac{1}{k_i}\sum_j p_{ij} k_j$, $\langle c_i\rangle = \frac{\sum_{j<k} p_{ij} p_{jk} p_{ik}}{\binom{k_i}{2}}$.
+6. **Reciprocity z-score** (DBCM, analytical): $\langle L^{\leftrightarrow}\rangle = \sum_{i<j} p_{ij} p_{ji}$, $\sigma^2 = \sum_{i<j} p_{ij} p_{ji}(1 - p_{ij} p_{ji})$.
+7. **Z-scores**: $z_X = \frac{X^{\text{obs}} - \langle X \rangle}{\sigma_X}$ — $|z| > 2$ → property is **statistically significant**.
 
-### Z-score results (ensemble = 500, seed = 42)
+### Z-score results (ensemble = 1 000, seed = 42)
 
-**Karate Club (n = 34)**
+**Karate Club — UBCM (n = 34)**
 
-| Property | Observed | ⟨X⟩_UBCM | σ | z-score | Significant? |
+| Property | Observed | ⟨X⟩ | σ | z-score | Significant? |
 |---|---|---|---|---|---|
-| avg_clustering | 0.571 | 0.357 | 0.069 | **+3.08** | **Yes** |
-| transitivity | 0.256 | 0.272 | 0.036 | −0.45 | No |
-| n_triangles | 45 | 53.0 | 13.5 | −0.59 | No |
-| assortativity | −0.476 | −0.327 | 0.067 | **−2.21** | **Yes** |
-| density | 0.139 | 0.139 | 0.012 | −0.02 | No |
+| avg_clustering | 0.571 | 0.357 | 0.068 | **+3.14** | **Yes** |
+| transitivity | 0.256 | 0.273 | 0.036 | −0.46 | No |
+| n_triangles | 45 | 53.6 | 13.7 | −0.63 | No |
+| assortativity | −0.476 | −0.325 | 0.070 | **−2.16** | **Yes** |
+| density | 0.139 | 0.139 | 0.012 | +0.01 | No |
 
-**Les Misérables (n = 77)**
+**Les Misérables — UBCM (n = 77)**
 
-| Property | Observed | ⟨X⟩_UBCM | σ | z-score | Significant? |
+| Property | Observed | ⟨X⟩ | σ | z-score | Significant? |
 |---|---|---|---|---|---|
-| avg_clustering | 0.573 | 0.238 | 0.030 | **+11.0** | **Yes** |
-| transitivity | 0.499 | 0.236 | 0.019 | **+13.6** | **Yes** |
-| n_triangles | 467 | 237.4 | 38.9 | **+5.9** | **Yes** |
-| assortativity | −0.165 | −0.185 | 0.037 | +0.53 | No |
-| density | 0.087 | 0.087 | 0.005 | −0.01 | No |
+| avg_clustering | 0.573 | 0.237 | 0.032 | **+10.58** | **Yes** |
+| transitivity | 0.499 | 0.237 | 0.020 | **+13.30** | **Yes** |
+| n_triangles | 467 | 237.3 | 38.7 | **+5.93** | **Yes** |
+| assortativity | −0.165 | −0.185 | 0.036 | +0.56 | No |
+| density | 0.087 | 0.087 | 0.005 | +0.03 | No |
+
+**email-Eu-core — DBCM (n = 986, directed)**
+
+| Property | Observed | ⟨X⟩ | σ | z-score | Significant? |
+|---|---|---|---|---|---|
+| reciprocity | 8 865 | 1 618 | 38.2 | **+189.72** | **Yes** |
+| reciprocity (analytical) | 8 865 | 1 617 | 38.1 | **+190.17** | **Yes** |
+| avg_clustering | 0.399 | 0.076 | 0.009 | **+35.14** | **Yes** |
+| transitivity | 0.221 | 0.032 | 0.006 | **+33.48** | **Yes** |
+| assortativity | −0.011 | −0.045 | 0.002 | **+21.93** | **Yes** |
+| density | 0.026 | 0.026 | 0.000 | −0.39 | No |
 
 ### Interpretation
 
-- **Density is always z ≈ 0** — expected, since the degree constraints implicitly fix the total number of edges.
-- **Karate Club** shows significantly higher clustering ($z = +3.1$) and significantly more disassortative mixing ($z = -2.2$) than explained by degrees alone → evidence of genuine community structure.
-- **Les Misérables** has *massively* higher clustering and transitivity ($z > 11$) than the UBCM predicts → the co-appearance network has strong triadic closure *beyond* what heterogeneous degrees produce. This aligns with the known presence of dense character groups (communities).
-- **Assortativity** in Les Misérables is *not* significant ($z = +0.5$) → degree-degree correlations are well-explained by the degree sequence alone.
+- **Density is always z ≈ 0** — expected, since degree constraints implicitly fix the total number of edges.
+- **Karate Club** shows significantly higher clustering ($z = +3.1$) and anomalous disassortativity ($z = -2.2$) → evidence of genuine community structure beyond degrees.
+- **Les Misérables** has *massively* higher clustering and transitivity ($z > 10$) → strong triadic closure beyond what heterogeneous degrees produce.
+- **email-Eu-core** (directed): reciprocity $z = +190$ — the degree sequence explains almost **nothing** of the observed reciprocity. Clustering ($z = +35$) and transitivity ($z = +33$) are also hugely significant. This is consistent with the World Trade Web results of Squartini & Garlaschelli (2011).
+- **Analytical vs numerical**: analytical expectations match ensemble means perfectly, validating both the formulas and the sampling procedure.
 
 ---
 
@@ -147,12 +164,15 @@ For each real-world network:
 | Figure | Description |
 |---|---|
 | `*_degree_scatter.png` | Observed vs expected degree (should align on y = x) |
-| `*_annd_comparison.png` | ANND: observed vs UBCM ensemble, by node degree |
-| `*_clustering_comparison.png` | Clustering: observed vs UBCM ensemble, by node degree |
+| `*_annd_comparison.png` | ANND: observed vs CM ensemble, by node degree |
+| `*_clustering_comparison.png` | Clustering: observed vs CM ensemble, by node degree |
+| `*_annd_analytical_vs_numerical.png` | Analytical vs numerical ANND (validation) |
+| `*_clustering_analytical_vs_numerical.png` | Analytical vs numerical clustering (validation) |
 | `*_zscore_summary.png` | Bar chart of z-scores per property |
 | `*_transitivity_distribution.png` | Ensemble histogram with observed value |
 | `*_avg_clustering_distribution.png` | Ensemble histogram with observed value |
 | `*_n_triangles_distribution.png` | Ensemble histogram with observed value |
+| `email_eu_core_reciprocity_analysis.png` | Reciprocity: observed vs DBCM expected (directed) |
 
 ---
 
@@ -171,12 +191,12 @@ pip install -r requirements.txt
 # Run solver benchmark (default: 5 runs, sizes up to 2000)
 python src/experiment.py --outdir results --seed 42
 
-# Run null-model analysis (default: 500 ensemble samples)
+# Run null-model analysis (default: 1000 ensemble samples)
 python src/analysis.py --outdir results --seed 42
 
 # Customise
-python src/experiment.py --runs 10 --sizes "100,500,1000,5000" --p 0.1
-python src/analysis.py --ensemble 1000
+python src/experiment.py --runs 10 --sizes "100,500,1000" --p 0.1
+python src/analysis.py --ensemble 2000
 ```
 
 ### Conda alternative
@@ -203,11 +223,12 @@ results/
 │   ├── karate_club_annd_comparison.png
 │   ├── karate_club_clustering_comparison.png
 │   ├── karate_club_zscore_summary.png
-│   ├── karate_club_transitivity_distribution.png
-│   ├── les_miserables_degree_scatter.png
-│   ├── les_miserables_annd_comparison.png
-│   ├── les_miserables_clustering_comparison.png
-│   ├── les_miserables_zscore_summary.png
+│   ├── karate_club_annd_analytical_vs_numerical.png
+│   ├── karate_club_clustering_analytical_vs_numerical.png
+│   ├── les_miserables_*.png
+│   ├── email_eu_core_degree_scatter.png
+│   ├── email_eu_core_reciprocity_analysis.png
+│   ├── email_eu_core_zscore_summary.png
 │   └── ...
 ├── tables/
 │   ├── benchmark.csv
@@ -249,3 +270,4 @@ results/
 2. Squartini, T. & Garlaschelli, D. (2011). *Analytical maximum-likelihood method to detect patterns in real networks.* New Journal of Physics **13**, 083001. [doi:10.1088/1367-2630/13/8/083001](https://doi.org/10.1088/1367-2630/13/8/083001)
 3. Zachary, W. W. (1977). *An information flow model for conflict and fission in small groups.* Journal of Anthropological Research **33**(4), 452–473.
 4. Knuth, D. E. (1993). *The Stanford GraphBase: A Platform for Combinatorial Computing.* ACM Press. (Les Misérables dataset)
+5. Yin, H., Benson, A. R., Leskovec, J. & Gleich, D. F. (2017). *Local Higher-order Graph Clustering.* KDD 2017. (email-Eu-core dataset from [SNAP](https://snap.stanford.edu/data/email-Eu-core.html))

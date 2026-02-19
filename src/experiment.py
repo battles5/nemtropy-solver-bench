@@ -541,7 +541,7 @@ def main() -> None:
         "--seed", type=int, default=42, help="Global RNG seed",
     )
     ap.add_argument(
-        "--runs", type=int, default=5,
+        "--runs", type=int, default=10,
         help="Independent runs per (method, network) combination",
     )
     ap.add_argument(
@@ -549,7 +549,7 @@ def main() -> None:
         help="Ensemble graphs to sample per solved model (0 = skip)",
     )
     ap.add_argument(
-        "--sizes", type=str, default="50,100,200,500,1000,2000",
+        "--sizes", type=str, default="50,100,200,500,1000,2000,5000",
         help="Comma-separated network sizes for synthetic G(n,p)",
     )
     ap.add_argument(
