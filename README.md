@@ -258,9 +258,6 @@ results/
 ├── src/
 │   ├── experiment.py              # Solver benchmark
 │   └── analysis.py                # Null-model analysis (z-scores)
-├── slides/
-│   ├── presentation.tex           # Beamer slides (Metropolis)
-│   └── presentation.pdf           # Compiled PDF
 ├── materiale_corso/               # Course material (text extracts)
 ├── data/                          # Reserved for future datasets
 └── results/

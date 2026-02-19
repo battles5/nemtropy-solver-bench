@@ -19,6 +19,9 @@ slides/*.snm
 slides/*.toc
 slides/*.vrb
 
+# Slides — do not publish
+slides/
+
 # Results (samples are large — do not commit)
 results/samples/
 
