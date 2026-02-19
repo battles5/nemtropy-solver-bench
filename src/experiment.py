@@ -9,7 +9,8 @@ Toolbox: NEMtropy  –  https://github.com/nicoloval/NEMtropy
 
 Networks
 --------
-- Zachary's Karate Club (n=34, empirical, UBCM only)
+- Zachary's Karate Club  (n=34,  empirical, UBCM)
+- Les Miserables         (n=77,  empirical, UBCM)
 - Synthetic G(n, p) undirected  (UBCM)
 - Synthetic G(n, p) directed    (DBCM)
 
@@ -586,6 +587,29 @@ def main() -> None:
                 ),
             )
             res.network = "karate_club"
+            res.run = r
+            results.append(res)
+            log.info(
+                "  %-14s run=%d  t=%.4fs  max_err=%s  mean_err=%s",
+                method, r, res.runtime_s, res.max_rel_err, res.mean_rel_err,
+            )
+
+    # -------------------------------------------------------------------
+    # 1b) Les Miserables (UBCM) — second real network, n=77
+    # -------------------------------------------------------------------
+    log.info("=" * 60)
+    log.info("1b) Les Miserables — UBCM (%s)", UBCM_MODEL)
+    log.info("=" * 60)
+
+    Glm = nx.les_miserables_graph()
+    Glm = nx.convert_node_labels_to_integers(Glm)
+    Alm = adjacency_from_graph(Glm)
+
+    for method in METHODS:
+        for r in range(args.runs):
+            seed_i = int(rng.integers(0, 1_000_000))
+            res = solve_ubcm(Alm, method=method, seed=seed_i)
+            res.network = "les_miserables"
             res.run = r
             results.append(res)
             log.info(
